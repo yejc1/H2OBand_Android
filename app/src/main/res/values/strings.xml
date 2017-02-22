@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">H2OBand_03</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string-array name="names">
+            <item>Metric</item>
+            <item>American</item>
+    </string-array>
+</resources>
