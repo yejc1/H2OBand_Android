@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text=" Add more"
+                    android:text=" This is an alarm"
                     android:id="@+id/alarmText"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
