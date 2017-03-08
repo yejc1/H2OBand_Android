@@ -25,13 +25,13 @@ android:background="#d1e2ff"
         android:paddingBottom="20dp">
 
         <TextView
-            android:text="Notification"
+            android:text="Setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/textView31"
             android:layout_weight="1"
             android:textSize="30sp"
-            tools:text="Setting" />
+             />
 
 
     </LinearLayout>
@@ -51,9 +51,8 @@ android:background="#d1e2ff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/device_pairing"
-                tools:text="Device Pairing"
                 android:textSize="30sp"
-                android:text="From"
+                android:text="Device Pairing"
                 android:background="#edf0f4"
                 android:layout_weight="1"
                 android:clickable="true"
@@ -73,11 +72,10 @@ android:background="#d1e2ff"
             android:layout_height="match_parent">
 
             <TextView
-                android:text="To"
+                android:text="Account Info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/account_info"
-                tools:text="Account Info"
                 android:textSize="30sp"
                 android:background="#edf0f4"
                 android:layout_weight="1" />
@@ -95,11 +93,10 @@ android:background="#d1e2ff"
             android:layout_height="match_parent">
 
             <TextView
-                android:text="To"
+                android:text="Goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/goal"
-                tools:text="Goal"
                 android:textSize="30sp"
                 android:background="#edf0f4"
                 android:layout_weight="1" />
@@ -117,11 +114,10 @@ android:background="#d1e2ff"
             android:layout_height="match_parent">
 
             <TextView
-                android:text="To"
+                android:text="Notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/notification"
-                tools:text="Notification"
                 android:textSize="30sp"
                 android:background="#edf0f4"
                 android:layout_weight="1" />

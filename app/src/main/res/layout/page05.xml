@@ -24,13 +24,13 @@
             android:paddingBottom="20dp">
 
             <TextView
-                android:text="Notification"
+                android:text="Device Pairing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2"
+                android:id="@+id/textView51"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                tools:text="Device Pairing" />
+                />
 
 
         </LinearLayout>
@@ -41,20 +41,19 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="TextView"
+                android:text="Bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView7"
-                tools:text="Bluetooth"
+                android:id="@+id/textView52"
                 android:textSize="30sp"
                 android:background="#edf0f4"
                 android:layout_weight="1" />
 
             <TextView
-                android:text="TextView"
+                android:text="ON"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView13"
+                android:id="@+id/textView53"
                 android:layout_weight="1"
                 tools:text="ON"
                 android:textSize="30sp"
@@ -65,10 +64,10 @@
         </LinearLayout>
 
         <TextView
-            android:text="TextView"
+            android:text="Select your device"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView12"
+            android:id="@+id/textView54"
             android:layout_weight="1"
             android:textSize="30sp"
             tools:text="Select your device" />
