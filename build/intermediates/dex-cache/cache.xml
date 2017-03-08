@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="5ba0fbfa0ca4d3c10d0000fe07041c0775024567">
+        sha1="dda3d32b5b49c87b0b071d0abcbbdcfcaee91b84">
         <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f339f2f709eda4160640888f7afc8645b8c1a7c9\classes.dex" />
     </item>
     <item
@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="77f2497cef86371d446551940a8babe4a92ece28">
+        sha1="b711528d926409be70752ec0abed307e19b9b989">
         <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_326feae638a8ce400788174bbd0ab1a0113a2180\classes.dex" />
     </item>
     <item
@@ -75,21 +75,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_8ea24e17e33ca32065e723270c4c2fd48fbe0049\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.rengwuxian.materialedittext\library\2.0.3\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="052802ed198178e7133de387fbc87d3f2998482a">
         <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.rengwuxian.materialedittext-library-2.0.3_b2d48c61f269f0a85ab4320c17eb581ced88b692\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_8ea24e17e33ca32065e723270c4c2fd48fbe0049\classes.dex" />
     </item>
     <item
         is-multidex="true"

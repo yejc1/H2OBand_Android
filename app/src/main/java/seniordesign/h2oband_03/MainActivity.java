@@ -32,10 +32,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String TAG ="Tab01";
-    private float yData = 35;
-    private String xData= "Water Consumption";
-    PieChart pieChart;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -97,25 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addDataSet(PieChart chart){
-        Log.d(TAG,"addDataSet: started");
-        ArrayList<PieEntry> yEntry = new ArrayList<>();
-        ArrayList<String> xEntry= new ArrayList<>();
 
-        yEntry.add(new PieEntry(yData));
-        xEntry.add(xData);
-
-        PieDataSet pieDataSet= new PieDataSet(yEntry,"Water");
-
-      //  ArrayList<Integer> colors= new ArrayList<>();
-    //    colors.add(Color.BLUE);
-
-        pieDataSet.setColors(Color.BLUE);
-
-        PieData pieData= new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-    }
 
 
     @Override
@@ -181,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "Home";
                 case 1:
-                    return "Alarm";
+                    return "Report";
                 case 2:
                     return "Setting";
             }

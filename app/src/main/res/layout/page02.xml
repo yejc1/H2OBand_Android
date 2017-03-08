@@ -12,7 +12,9 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -23,42 +25,78 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
-                android:text="When do you want to be alerted?"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:text="Report"
+                android:textSize="40sp"
+                android:textAlignment="textStart"
+                android:paddingBottom="20dp" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TimePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:timePickerMode="spinner"
-                    android:id="@+id/alarmTimePicker"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-
-                <ToggleButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Alarm On/Off"
-                    android:id="@+id/alarmToggle"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/alarmTimePicker"
-                    android:onClick="onToggleClicked" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text=" This is an alarm"
-                    android:id="@+id/alarmText"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_below="@+id/alarmToggle" />
+                    android:id="@+id/textView2"
+                    android:text="Today you drank"
+                    android:textSize="30sp"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:text="1500mL"
+                    android:textSize="30sp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:text="Drank the most between"
+                    android:textSize="30sp"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    android:text="10:00 - 14:00"
+                    android:textSize="30sp"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:text="Drink more betwwen"
+                    android:textSize="30sp"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView7"
+                    android:text="16:00 - 20:00"
+                    android:textSize="30sp"
+                    android:textAlignment="center" />
             </LinearLayout>
 
         </LinearLayout>
