@@ -55,15 +55,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="7:30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView43"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4"/>
+                <Spinner
+                    android:id="@+id/from_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -85,15 +83,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="20:00"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView45"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/to_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -115,15 +111,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="2 hr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView47"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/inteval_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -149,15 +143,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="Old Phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView49"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/sound_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -179,15 +171,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="ON"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView442"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/vibration_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 

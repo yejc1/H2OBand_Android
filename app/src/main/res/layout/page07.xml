@@ -101,15 +101,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="7:30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView8"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4"/>
+                <Spinner
+                    android:id="@+id/from_init_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -131,15 +129,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="20:00"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView9"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/to_init_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -161,15 +157,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="2 hr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView10"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/interval_init_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -195,15 +189,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="Old Phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView11"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/sound_init_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <View
@@ -225,15 +217,13 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="ON"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView13"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4" />
+                <Spinner
+                    android:id="@+id/vibration_init_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 

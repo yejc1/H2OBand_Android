@@ -142,6 +142,18 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     Tab03 tab3= new Tab03();
                     return tab3;
+                case 3:
+                    Tab04 tab4= new Tab04();
+                    return tab4;
+                case 4:
+                    Tab05 tab5= new Tab05();
+                    return tab5;
+                case 5:
+                    Tab06 tab6= new Tab06();
+                    return tab6;
+                case 6:
+                    Tab07 tab7= new Tab07();
+                    return tab7;
                 default:
                     return null;
             }
@@ -150,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 7;
         }
 
         @Override
@@ -162,6 +174,14 @@ public class MainActivity extends AppCompatActivity {
                     return "Report";
                 case 2:
                     return "Setting";
+                case 3:
+                    return "tab2";
+                case 4:
+                    return "tab1";
+                case 5:
+                    return "iInit";
+                case 6:
+                    return "tab4";
             }
             return null;
         }
