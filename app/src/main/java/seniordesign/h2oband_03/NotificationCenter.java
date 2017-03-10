@@ -1,6 +1,7 @@
 package seniordesign.h2oband_03;
 
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import android.app.NotificationManager;
@@ -14,7 +15,7 @@ import android.support.v7.app.ActionBarActivity;
  * Created by Owner on 3/8/2017.
  */
 
-public class NotificationCenter extends ActionBarActivity {
+public class NotificationCenter extends ActionBarActivity{
 
     NotificationCompat.Builder notification;
     private static final int uniqueID= 45512;

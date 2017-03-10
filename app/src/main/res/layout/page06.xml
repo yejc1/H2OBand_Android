@@ -25,13 +25,13 @@
             android:paddingBottom="20dp">
 
             <TextView
-                android:text="Notification"
+                android:text="Initialization"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView61"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                tools:text="Initialization" />
+ />
 
 
         </LinearLayout>
@@ -56,15 +56,17 @@
                     android:background="#edf0f4"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:text="Hannah"
+                <EditText
+                    android:id="@+id/editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView63"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textAlignment="textEnd"
-                    android:background="#edf0f4"/>
+                    android:ems="9"
+                    android:hint="H2O Band"
+                    android:inputType="textPersonName"
+                    android:background="#edf0f4"
+                    android:cursorVisible="false"/>
+
             </LinearLayout>
 
             <View
@@ -78,52 +80,58 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView64"
-                    android:textSize="30sp"
-                    android:background="#edf0f4"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/age_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
-
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="5dp"
-                android:background="#00000000" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:text="Weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView66"
-                    android:textSize="30sp"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:layout_weight="1" />
+                    android:text="Age"
 
-                <Spinner
-                    android:id="@+id/weight_spinner"
-                    android:layout_width="wrap_content"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/age_edit"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:cursorVisible="false"
+                    android:ems="9"
+                    android:hint="21"
+                    android:inputType="number" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="#00000000" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView66"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#edf0f4"
+                    android:text="Weight"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/weight_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#edf0f4"
+                    android:cursorVisible="false"
+                    android:ems="9"
+                    android:hint="110"
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -141,21 +149,21 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Gender"
+                    android:id="@+id/textView68"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView68"
-                    android:textSize="30sp"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:layout_weight="1" />
+                    android:text="Gender"
+                    android:textSize="30sp" />
 
                 <Spinner
                     android:id="@+id/gender_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <View
@@ -169,21 +177,21 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Unit"
+                    android:id="@+id/textView620"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView620"
-                    android:textSize="30sp"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:layout_weight="1" />
+                    android:text="Unit"
+                    android:textSize="30sp" />
 
                 <Spinner
                     android:id="@+id/unit_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
 
             </LinearLayout>
 

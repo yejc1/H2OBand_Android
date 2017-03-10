@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 case 6:
                     Tab07 tab7= new Tab07();
                     return tab7;
+
                 default:
                     return null;
             }
@@ -175,13 +176,13 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     return "Setting";
                 case 3:
-                    return "tab2";
+                    return "Noti";
                 case 4:
-                    return "tab1";
+                    return "Bluetooth";
                 case 5:
-                    return "iInit";
+                    return "Init";
                 case 6:
-                    return "tab4";
+                    return "Init2";
             }
             return null;
         }

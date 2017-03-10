@@ -103,11 +103,11 @@
 
                 <Spinner
                     android:id="@+id/from_init_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <View
@@ -131,11 +131,11 @@
 
                 <Spinner
                     android:id="@+id/to_init_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <View
@@ -159,11 +159,11 @@
 
                 <Spinner
                     android:id="@+id/interval_init_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
         </LinearLayout>
@@ -191,11 +191,11 @@
 
                 <Spinner
                     android:id="@+id/sound_init_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <View
@@ -219,11 +219,11 @@
 
                 <Spinner
                     android:id="@+id/vibration_init_spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#edf0f4"
-                    android:spinnerMode="dropdown"
-                    android:layout_weight="1"/>
+                    android:spinnerMode="dropdown" />
 
             </LinearLayout>
 
