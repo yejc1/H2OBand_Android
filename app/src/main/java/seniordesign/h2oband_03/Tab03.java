@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 public class Tab03 extends PageFragment {
 
+    /**
+     * An enumerator to specify the button that was clicked
+     */
     private enum PageSelection {
         DEVICE_PAIRING,
         NOTIFICATION
@@ -40,6 +43,7 @@ public class Tab03 extends PageFragment {
         return true;
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.settings, container, false);
@@ -47,6 +51,10 @@ public class Tab03 extends PageFragment {
         return rootView;
     }
 
+    /**
+     * Sets the current view and initializes buttons
+     * @param view    The view to set
+     */
     private void setView(View view) {
         LayoutInflater.from(getContext())
                 .inflate(R.layout.page03, (FrameLayout)view.findViewById(R.id.settings_frame));
@@ -68,6 +76,10 @@ public class Tab03 extends PageFragment {
         });
     }
 
+    /**
+     * Switches the page when a button is clicked
+     * @param selection    The selected button
+     */
     private void switchPage(PageSelection selection) {
         FrameLayout settings_frame = (FrameLayout)getView().findViewById(R.id.settings_frame);
         ViewGroup sub_frame = (ViewGroup)settings_frame.getChildAt(0);
