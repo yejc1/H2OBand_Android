@@ -24,6 +24,7 @@ public class Tab03 extends PageFragment {
      */
     private enum PageSelection {
         DEVICE_PAIRING,
+        INITIALIZATION_SETUP,
         NOTIFICATION
     };
 
@@ -62,16 +63,19 @@ public class Tab03 extends PageFragment {
         LayoutInflater.from(getContext())
                 .inflate(R.layout.page03, (FrameLayout)view.findViewById(R.id.settings_frame));
 
-
-        TextView device_pairing = (TextView)view.findViewById(R.id.device_pairing),
-                notification = (TextView)view.findViewById(R.id.notification);
-        device_pairing.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.device_pairing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchPage(PageSelection.DEVICE_PAIRING);
             }
         });
-        notification.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.account_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPage(PageSelection.INITIALIZATION_SETUP);
+            }
+        });
+        view.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchPage(PageSelection.NOTIFICATION);
@@ -90,6 +94,11 @@ public class Tab03 extends PageFragment {
         switch(selection) {
             case DEVICE_PAIRING:
                 LayoutInflater.from(getContext()).inflate(R.layout.page05, settings_frame);
+                setDevicePairingPage();
+                break;
+            case INITIALIZATION_SETUP:
+                LayoutInflater.from(getContext()).inflate(R.layout.page06, settings_frame);
+                setInitializationSetup();
                 break;
             case NOTIFICATION:
                 LayoutInflater.from(getContext()).inflate(R.layout.page04, settings_frame);
@@ -97,6 +106,48 @@ public class Tab03 extends PageFragment {
                 break;
             default:
                 Log.e(getClass().toString(), "Invalid page selection received");
+        }
+    }
+
+    /**
+     * Sets the device pairing page
+     * Assumes that the device pairing page has already been brought to focus in the settings
+     * frame
+     */
+    private void setDevicePairingPage() {
+        FrameLayout settings_frame = (FrameLayout)getView();
+        if(settings_frame != null) {
+            LinearLayout notifications_frame = (LinearLayout)settings_frame.getChildAt(1);
+
+            Spinner dropdown = (Spinner) notifications_frame.findViewById(R.id.bluetooth_spinner);
+            String[] items = new String[]{"ON","OFF"};
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            dropdown.setAdapter(adapter);
+        }
+    }
+
+    /**
+     * Sets the intialization setup page
+     * Assumes that the intialization setup page has already been brought to focus in the settings
+     * frame
+     */
+    private void setInitializationSetup() {
+        FrameLayout settings_frame = (FrameLayout)getView();
+        if(settings_frame != null) {
+            LinearLayout notifications_frame = (LinearLayout)settings_frame.getChildAt(1);
+
+            Spinner gender_dropdown = (Spinner) notifications_frame.findViewById(R.id.gender_spinner);
+            String[] gender_items = new String[]{"Female", "Male"};
+            ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, gender_items);
+            gender_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            gender_dropdown.setAdapter(gender_adapter);
+
+            Spinner unit_dropdown = (Spinner) notifications_frame.findViewById(R.id.unit_spinner);
+            String[] unit_items = new String[]{"Metric", "American"};
+            ArrayAdapter<String> unit_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, unit_items);
+            unit_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            unit_dropdown.setAdapter(unit_adapter);
         }
     }
 
@@ -141,6 +192,7 @@ public class Tab03 extends PageFragment {
             vibration_dropdown.setAdapter(vibration_adapter);
         }
     }
+
 
 
 
