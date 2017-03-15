@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("MainActivity", "Starting app");
+
         /*
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(MainActivity.this,
@@ -94,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        int position = mViewPager.getCurrentItem();
+        if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
+                .onBackPressed())
+            super.onBackPressed();
+    }
+
+
 
 
     @Override
@@ -126,28 +137,31 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        ArrayList<PageFragment> pages;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            pages = new ArrayList<>();
+            fillPageList();
+        }
+
+        private void fillPageList() {
+            pages.add(new Tab01());
+            pages.add(new Tab02());
+            pages.add(new Tab03());
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new Tab01();
-                case 1:
-                    return new Tab02();
-                case 2:
-                    return new Tab03();
-                default:
-                    return null;
-            }
+            if(position < pages.size())
+                return pages.get(position);
+            return null;
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return pages.size();
         }
 
         @Override
@@ -159,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
                     return "Report";
                 case 2:
                     return "Setting";
+                default:
+                    return "";
             }
-            return null;
         }
     }
 }

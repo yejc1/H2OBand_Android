@@ -23,6 +23,20 @@ public class Tab03 extends PageFragment {
 
     @Override
     public boolean onBackPressed() {
+        FrameLayout settings_frame = (FrameLayout)getView();
+
+        // indicates that the root view, the FrameLayout (named settings_frame), only
+        // has one child, which would be the Tab03
+        //
+        // if the settings_frame has more than one child, it indicates that Tab03 is not
+        // the view in focus, but that a button has been clicked and another window is
+        // overlapping
+        if(settings_frame.getChildCount() == 1)
+            return false;
+
+        settings_frame.removeViewAt(1);
+        settings_frame.getChildAt(0).setVisibility(View.VISIBLE);
+
         return true;
     }
 
