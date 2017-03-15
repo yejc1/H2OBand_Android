@@ -134,14 +134,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Tab01 tab1= new Tab01();
-                    return tab1;
+                    return new Tab01();
                 case 1:
-                    Tab02 tab2= new Tab02();
-                    return tab2;
+                    return new Tab02();
                 case 2:
-                    Tab03 tab3= new Tab03();
-                    return tab3;
+                    return new Tab03();
                 default:
                     return null;
             }

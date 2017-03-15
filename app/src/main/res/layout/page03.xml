@@ -56,7 +56,6 @@ android:background="#d1e2ff"
                 android:background="#edf0f4"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:onClick="click"
                 />
 
         </LinearLayout>

@@ -16,7 +16,7 @@ package seniordesign.h2oband_03;
 
         import com.github.mikephil.charting.charts.PieChart;
 
-public class Tab01  extends Fragment{
+public class Tab01  extends PageFragment {
 
     private static String TAG ="Tab01";
     private float yData = 35;

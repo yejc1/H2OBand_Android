@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Tab02 extends Fragment{
+public class Tab02 extends PageFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

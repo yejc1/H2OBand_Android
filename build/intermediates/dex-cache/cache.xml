@@ -2,220 +2,202 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="1c1736055694b189c8c5d1c4fed3f05336bb940b">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f339f2f709eda4160640888f7afc8645b8c1a7c9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_81fa56b70f3fc7a44865f29101b27e79b769c12a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_c00460bab5aa27ed3ba64258e588fac27f2bd428\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_a18207da85f170371bc4e7cd75d7a524e2e61b34\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_d3bab69e053210ecee9ac5ca5640e7a5eb744557\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="337c5a2a1359a2ad8aeb4d9f8022f281a4abe86d">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_326feae638a8ce400788174bbd0ab1a0113a2180\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.weiwangcn.betterspinner\library-material\1.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="8d8c5463a1a50691e2cf66cd7ce4751c8545b584">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.weiwangcn.betterspinner-library-material-1.1.0_4d5caea6b98ff714fcf4fce7a5baf08fe96c212e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_b9e48b09575471d5ef93310186e53ecb8d85a4c3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.rengwuxian.materialedittext\library\2.0.3\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="052802ed198178e7133de387fbc87d3f2998482a">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.rengwuxian.materialedittext-library-2.0.3_b2d48c61f269f0a85ab4320c17eb581ced88b692\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_8ea24e17e33ca32065e723270c4c2fd48fbe0049\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_3d5b27b2a5853e4e35e8fb1df2c0773c72b90ce3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_e4faaa4431a37f9f2ba24fd0aaf4f0c5ed010ff6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_d70fb9a1d93b61726f1e455a6efee8eeec0e02a9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_87598a338d555472adf15f9273f9af8156b41457\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_c191cad1bb6623b38f8276c66186641f0c280810\classes.dex" />
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.0.1_6822e9b2312134a2f262e467bd1e25ffb6be6d3b.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_c86c8fa24f5fb7739238eacd265ba6160c6da852\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_0ae6781f53d0302c070d94acb5f9a3e7e5ae9343\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_fbef3720435e6406eedba54b5ce04e8034634e48\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_678cbd5cf349e4befb02e686bde3eb709ba71be8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_975a5b3f5e1f1e4c524b4ee7c47ded870e20d7a5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_d733c3a3fde1890dab20c1089ae3510d4565c27b\classes.dex" />
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.0.1_dc518a0499bdce1946832e2ff4c4f5173c6dafa2.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Owner\.gradle\caches\modules-2\files-2.1\com.github.PhilJay\MPAndroidChart\v3.0.1\369f9aa48a629b4e92557b37326f42dc3de796e4\MPAndroidChart-v3.0.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/saumil/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/support-annotations-25.0.1_62de6610965107e12ed6ac4defca72dd2a4459cc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_567d8fb30b6243a47369eab855e23b612d1058dd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.0.1_f7b96bc44f3c33e24464585bc844ef90a94913a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/design/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-design-25.0.1_0127211391baf555b37799b71aa70c0aabd93dea.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.0.1_b86353903e569fd21502a1a5a21341e9f48bb0ac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.0.1_920c155e990c7f593fb6107cac7f230e278ef048.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/library-2.4.0_71288b5fced6babf461ac5b581291d1631e80304.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.0.1_814466ed4d1351996122f662f321a41c70dc4e75.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/transition/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-transition-25.0.1_c3a860648e4b8cc05041c512215d0d2bc9ad0d2e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_45510a1957a6441dc355f02eeb8119463232283b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.weiwangcn.betterspinner/library-material/1.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8d8c5463a1a50691e2cf66cd7ce4751c8545b584">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.weiwangcn.betterspinner-library-material-1.1.0_635c1aeb5cf7a9d3322a329fa5df2e13aefb069f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_d0e34ca93bf05f5f86e575feae65e70ffe9e9414.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_c3b1e224fb2f67dcb93147300e72a69df9c6dfed.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v3.0.1/369f9aa48a629b4e92557b37326f42dc3de796e4/MPAndroidChart-v3.0.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="369f9aa48a629b4e92557b37326f42dc3de796e4">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\MPAndroidChart-v3.0.1_4c47d49474ff2c27e3805883b49af23639d65aa3\classes.dex" />
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/MPAndroidChart-v3.0.1_159a98c7d078c667840a00f0720b025b556c9f19.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_af56c9bcd8b6c9f9fb466b71516f821ff1a07b52\classes.dex" />
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.0.1_9e55e06265f8194b2f11816c789b13e2d563c957.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Owner\AndroidStudioProjects\H2OBand_03\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_1fb4ed1edbfb5aa6b6ce5c0f4161c13411f6a296\classes.dex" />
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.0.1_34785e29f28b124be8720edf5e5e67601775c602.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.0.1_817c5c3cb7eef7efdbf84837a4dc53078a7ebf17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_e43cd6b087dad42612618aec28b003f68a8a2e8f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.rengwuxian.materialedittext/library/2.0.3/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="052802ed198178e7133de387fbc87d3f2998482a">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.rengwuxian.materialedittext-library-2.0.3_212f6db04c05d93f577fcc9deffd90a2644446d9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/saumil/Documents/AndroidStudioProjects/H2OBand_Android/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.0.1_7684f1db9064590229c2fcc47f0727be1429bef4.jar" />
     </item>
 
 </items>
