@@ -31,9 +31,12 @@ public class Tab01  extends PageFragment {
 
         RelativeLayout mealLayout = (RelativeLayout) rootView.findViewById(R.id.background);
 
+        setView(rootView);
 
         return rootView;
     }
 
+    private void setView(View view) {
 
+    }
 }

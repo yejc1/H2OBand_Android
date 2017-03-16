@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -19,10 +21,15 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private class BottleThread extends Thread implements Runnable {
         final int INTERVAL = 100;
 
-        final SurfaceHolder sh;
+        private final SurfaceHolder sh;
+        private BottleSurfaceView bottleSurfaceView;
 
-        BottleThread() {
-            sh = getHolder();
+        BottleThread(BottleSurfaceView bottleSurfaceView) {
+            this.bottleSurfaceView = bottleSurfaceView;
+            if(bottleSurfaceView != null)
+                sh = bottleSurfaceView.getHolder();
+            else
+                sh = null;
         }
 
         @Override
@@ -112,11 +119,22 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public BottleSurfaceView(Context context) {
         super(context);
-        bottleThread = new BottleThread();
+        initialize();
+    }
+
+    public BottleSurfaceView(Context context, AttributeSet attrs) {
+        super(context,attrs);
+        initialize();
+    }
+
+    public BottleSurfaceView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         initialize();
     }
 
     private void initialize() {
+        bottle = new Bottle();
+        bottleThread = new BottleThread(BottleSurfaceView.this);
         SurfaceHolder sh = getHolder();
         sh.addCallback(this);
         setFocusable(true);
@@ -135,7 +153,7 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceDestroyed(SurfaceHolder sh) {
-        if(bottleThread != null)
+        if(bottleThread != null && !bottleThread.isInterrupted())
             bottleThread.interrupt();
     }
 
