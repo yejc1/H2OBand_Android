@@ -22,10 +22,8 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
         final int INTERVAL = 100;
 
         private final SurfaceHolder sh;
-        private BottleSurfaceView bottleSurfaceView;
 
         BottleThread(BottleSurfaceView bottleSurfaceView) {
-            this.bottleSurfaceView = bottleSurfaceView;
             if(bottleSurfaceView != null)
                 sh = bottleSurfaceView.getHolder();
             else
