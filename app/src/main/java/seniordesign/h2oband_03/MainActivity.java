@@ -31,6 +31,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    NotificationCenter noticenter= new NotificationCenter();
 
 
     /**
@@ -55,19 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", "Starting app");
 
-        /*
-        Spinner mySpinner = (Spinner) findViewById(R.id.spinner1);
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.names));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mySpinner.setAdapter(myAdapter);
-       */
 
-        /*
-        Log.d(TAG,"onCreate: starting to create chart");
-        pieChart = (PieChart) findViewById(R.id.idPieChart);
-        addDataSet(pieChart);
-*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -89,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
-
 
     }
 

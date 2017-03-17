@@ -20,6 +20,10 @@ public class Tab04 extends Fragment {
 
         RelativeLayout mealLayout = (RelativeLayout) rootView.findViewById(R.id.background);
 
+        NotificationCenter noticenter= new NotificationCenter();
+
+        noticenter.setAlarm(rootView);
+
 
         return rootView;
     }
