@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Sims">
+            <EditTextPreference android:title="Unit of measure" android:key="metric"/>
+        <EditTextPreference android:title="Gender" android:key="Femaile"/>
+        <EditTextPreference android:title="Weight" android:key="40kg"/>
+    </PreferenceCategory>
+</PreferenceScreen>
