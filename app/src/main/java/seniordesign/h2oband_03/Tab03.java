@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 public class Tab03 extends PageFragment {
 
@@ -30,11 +29,6 @@ public class Tab03 extends PageFragment {
 
     @Override
     public boolean onBackPressed() {
-        if(getView() == null)
-            Log.d("Tab03", "No view detected");
-        else
-            Log.d("Tab03", "View detected");
-
         FrameLayout settings_frame = (FrameLayout)getView();
 
         // Indicates that the root view, the FrameLayout (named settings_frame), only
