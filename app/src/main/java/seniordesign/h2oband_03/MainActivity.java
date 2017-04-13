@@ -143,40 +143,29 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Tab01 tab1= new Tab01();
-                    return tab1;
+                    return new Tab01();
                 case 1:
-                    Tab02 tab2= new Tab02();
-                    return tab2;
+                    return new Tab02();
                 case 2:
-                    Tab03 tab3= new Tab03();
-                    return tab3;
+                    return new Tab03();
                 case 3:
-                    Tab04 tab4= new Tab04();
-                    return tab4;
+                    return new Tab04();
                 case 4:
-                    Tab05 tab5= new Tab05();
-                    return tab5;
+                    return new Tab05();
                 case 5:
-                    Tab06 tab6= new Tab06();
-                    return tab6;
+                    return new Tab06();
                 case 6:
-                    Tab07 tab7= new Tab07();
-                    return tab7;
+                    return new Tab07();
 
                 default:
                     return null;
             }
-            if(position < pages.size())
-                return pages.get(position);
-            return null;
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 7;
-            return pages.size();
         }
 
         @Override
