@@ -164,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 7;
+            // Show 3 total pages instead of 7
+            return 3;
         }
 
         @Override
