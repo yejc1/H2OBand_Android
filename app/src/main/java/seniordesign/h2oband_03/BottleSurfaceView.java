@@ -21,10 +21,6 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private class BottleThread extends Thread implements Runnable {
         final int INTERVAL = 100;
 
-        final int INTERVALS_UNTIL_WAIT = 50;
-        final int MAX_WAIT_INTERVALS = 10;
-        int interval_counter;
-
         private final SurfaceHolder sh;
 
         BottleThread(BottleSurfaceView bottleSurfaceView) {
@@ -32,26 +28,21 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 sh = bottleSurfaceView.getHolder();
             else
                 sh = null;
-
-            interval_counter = 0;
         }
 
         @Override
         public void run() {
             Canvas c;
             while(!Thread.interrupted() && sh != null) {
-                if(interval_counter < INTERVALS_UNTIL_WAIT ||
-                        interval_counter >= INTERVALS_UNTIL_WAIT + MAX_WAIT_INTERVALS) {
-                    synchronized (sh) {
-                        c = sh.lockCanvas();
-                        if (c != null) {
-                            try {
-                                tick(c);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                sh.unlockCanvasAndPost(c);
-                            }
+                synchronized(sh) {
+                    c = sh.lockCanvas();
+                    if(c != null) {
+                        try {
+                            tick(c);
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            sh.unlockCanvasAndPost(c);
                         }
                     }
                 }
@@ -61,17 +52,15 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 } catch(InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                interval_counter++;
             }
         }
     }
 
     private class Bottle {
-        private float percentageComplete;
+        private int percentageComplete;
         private Bitmap empty_bottle;
 
-        Bottle() {
+        public Bottle() {
             importBitmap();
             percentageComplete = 0;
         }
@@ -83,7 +72,7 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
         private void updatePercentage() {
             if(percentageComplete < 100)
-                percentageComplete += 0.5;
+                percentageComplete += 1;
         }
 
 
@@ -99,7 +88,7 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
 
         private void paintLevel(Canvas c) {
-            int percentage = (int)(getHeight() * percentageComplete / 100);
+            int percentage = getHeight() * percentageComplete / 100;
 
             Paint brush = new Paint();
             brush.setColor(Color.CYAN);
