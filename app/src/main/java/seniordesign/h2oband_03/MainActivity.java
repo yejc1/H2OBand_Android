@@ -141,7 +141,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
+            if(position > pages.size())
+                return null;
+            return pages.get(position);
+
+            /* switch (position) {
                 case 0:
                     return new Tab01();
                 case 1:
@@ -159,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
                 default:
                     return null;
-            }
+            } */
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages instead of 7
-            return 3;
+            return pages.size();
         }
 
         @Override
