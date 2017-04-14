@@ -1,6 +1,8 @@
 package seniordesign.h2oband_03;
 
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MonitorThread monitorThread = null;
+    private Handler handler = new Handler();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     String result = "";
                     for(String current = input.readLine(); current != null; current = input.readLine())
                         result += current;
+
 
                     Log.d("MainActivity", result);
                 } catch(SocketTimeoutException e) {
