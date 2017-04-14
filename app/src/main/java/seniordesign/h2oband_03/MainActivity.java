@@ -1,8 +1,6 @@
 package seniordesign.h2oband_03;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,14 +10,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final int PORT = 8000;
+    private final int TIMEOUT = 500;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ServerSocket serverSocket;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        try {
+            serverSocket = new ServerSocket(PORT, 5, InetAddress.getLocalHost());
+            serverSocket.setSoTimeout(TIMEOUT);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -150,6 +161,45 @@ public class MainActivity extends AppCompatActivity {
                     return "Init2";
                 default:
                     return "";
+            }
+        }
+    }
+
+    private class MonitorThread extends Thread implements Runnable {
+        private final int PORT = 8000;
+        private final int BACKLOG = 5;
+        private final int TIMEOUT = 100;
+
+        @Override
+        public void run() {
+            ServerSocket serverSocket;
+            Socket socket;
+
+            try {
+                serverSocket = new ServerSocket(PORT, BACKLOG, InetAddress.getLocalHost());
+                serverSocket.setSoTimeout(TIMEOUT);
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
+            while(!Thread.interrupted()) {
+                try {
+                    socket = serverSocket.accept();
+                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                    String result = "";
+                    for(String current = input.readLine(); current != null; current = input.readLine())
+                        result += current;
+
+                    Log.d("MainActivity", result);
+                } catch(Exception e) {}
+            }
+
+            try {
+                serverSocket.close();
+                serverSocket = null;
+            } catch(IOException e) {
+                e.printStackTrace();
             }
         }
     }
