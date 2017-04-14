@@ -1,5 +1,6 @@
 package seniordesign.h2oband_03;
 
+import android.net.wifi.WifiManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,11 +20,11 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private final int PORT = 8000;
-    private final int TIMEOUT = 500;
+    MonitorThread monitorThread = null;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -32,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ServerSocket serverSocket;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -60,14 +62,13 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        try {
-            serverSocket = new ServerSocket(PORT, 5, InetAddress.getLocalHost());
-            serverSocket.setSoTimeout(TIMEOUT);
 
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
 
+        monitorThread = new MonitorThread();
+        monitorThread.start();
+        WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
 
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,6 +81,24 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(monitorThread != null && !monitorThread.isInterrupted())
+            monitorThread.interrupt();
+
+        Log.d("MainActivity", "Stopping H2OZone");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(monitorThread != null && !monitorThread.isInterrupted())
+            monitorThread.interrupt();
+
+        Log.d("MainActivity", "Destroying H2OZone");
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -89,15 +108,19 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
+
+
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<PageFragment> pages;
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             pages = new ArrayList<>();
             fillPageList();
@@ -172,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            ServerSocket serverSocket;
+            ServerSocket serverSocket = null;
             Socket socket;
 
             try {
@@ -180,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 serverSocket.setSoTimeout(TIMEOUT);
             } catch(IOException e) {
                 e.printStackTrace();
+                return;
             }
 
             while(!Thread.interrupted()) {
@@ -192,12 +216,15 @@ public class MainActivity extends AppCompatActivity {
                         result += current;
 
                     Log.d("MainActivity", result);
-                } catch(Exception e) {}
+                } catch(SocketTimeoutException e) {
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    break;
+                }
             }
 
             try {
                 serverSocket.close();
-                serverSocket = null;
             } catch(IOException e) {
                 e.printStackTrace();
             }
