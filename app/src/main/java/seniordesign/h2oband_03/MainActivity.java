@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         if(monitorThread != null && monitorThread.isAlive() && !monitorThread.isInterrupted())
             monitorThread.interrupt();
-
-        Log.d("MainActivity", "Stopping H2OZone");
     }
 
     @Override
@@ -227,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
 
                     String result = "";
                     BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    for(String current = input.readLine(); current != null; current = input.readLine())
-                        result += current;
+                    for(char c = (char)input.read(); c != 0; c = (char)input.read())
+                        result += c;
                     Log.d("MonitorThread", result);
 
                     OutputStream output = socket.getOutputStream();
