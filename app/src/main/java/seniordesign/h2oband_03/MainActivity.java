@@ -66,35 +66,31 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
-        /* SendThread sendThread = new SendThread();
-        sendThread.start(); */
-
         monitorThread = new MonitorThread();
         monitorThread.start();
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(monitorThread != null && !monitorThread.isAlive())
+            monitorThread.start();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(monitorThread != null && !monitorThread.isInterrupted())
+        if(monitorThread != null && monitorThread.isAlive() && !monitorThread.isInterrupted())
             monitorThread.interrupt();
 
         Log.d("MainActivity", "Stopping H2OZone");
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(monitorThread != null && !monitorThread.isInterrupted())
-            monitorThread.interrupt();
-
-        Log.d("MainActivity", "Destroying H2OZone");
-    }
-
 
     @Override
     public void onBackPressed() {
