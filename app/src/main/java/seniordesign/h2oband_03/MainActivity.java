@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -66,22 +67,14 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
+        /* SendThread sendThread = new SendThread();
+        sendThread.start(); */
 
         monitorThread = new MonitorThread();
         monitorThread.start();
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
-
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     @Override
@@ -191,6 +184,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class SendThread extends Thread implements Runnable {
+        @Override
+        public void run() {
+            try {
+                String text = "halt";
+
+                Socket socket = new Socket("192.168.1.101", 80);
+                OutputStream output = socket.getOutputStream();
+                output.write(text.getBytes());
+
+                String response = "";
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                for(String current = input.readLine(); current != null; current = input.readLine())
+                    response += current;
+                Log.d("SendThread", response);
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private class MonitorThread extends Thread implements Runnable {
         private final int PORT = 8000;
         private final int BACKLOG = 5;
@@ -198,11 +212,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            ServerSocket serverSocket = null;
+            String response = "Received";
+            ServerSocket serverSocket;
             Socket socket;
 
             try {
-                serverSocket = new ServerSocket(PORT, BACKLOG, InetAddress.getLocalHost());
+                serverSocket = new ServerSocket(PORT, BACKLOG);
                 serverSocket.setSoTimeout(TIMEOUT);
             } catch(IOException e) {
                 e.printStackTrace();
@@ -212,14 +227,18 @@ public class MainActivity extends AppCompatActivity {
             while(!Thread.interrupted()) {
                 try {
                     socket = serverSocket.accept();
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    Log.d("MonitorThread", "Received connection");
 
                     String result = "";
+                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     for(String current = input.readLine(); current != null; current = input.readLine())
                         result += current;
+                    Log.d("MonitorThread", result);
 
+                    OutputStream output = socket.getOutputStream();
+                    output.write(response.getBytes());
 
-                    Log.d("MainActivity", result);
+                    socket.close();
                 } catch(SocketTimeoutException e) {
                 } catch(Exception e) {
                     e.printStackTrace();
