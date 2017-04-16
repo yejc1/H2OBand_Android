@@ -1,7 +1,8 @@
 package seniordesign.h2oband_03;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -16,18 +17,40 @@ import java.net.SocketTimeoutException;
  * Created by saumil on 4/16/17.
  */
 
-public class MainService extends IntentService {
-    public MainService() {
-        super("MainService");
+public class MainService extends Service {
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
-    public void onHandleIntent(Intent intent) {
-        final int PORT = 8080;
-        final int BACKLOG = 5;
-        final int TIMEOUT = 200;
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //new MonitorThread().start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!Thread.interrupted()) {
+                    Log.d("MainService", "Running main service");
 
-        while(!Thread.interrupted()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        return START_STICKY;
+    }
+
+    private class MonitorThread extends Thread implements Runnable {
+        private final int PORT = 8000;
+        private final int BACKLOG = 5;
+        private final int TIMEOUT = 100;
+
+        @Override
+        public void run() {
             String response = "Received";
             ServerSocket serverSocket;
             Socket socket;
