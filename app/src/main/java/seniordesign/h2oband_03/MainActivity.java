@@ -1,5 +1,6 @@
 package seniordesign.h2oband_03;
 
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
 
 
-
+        Intent intent = new Intent(getApplicationContext(), MainService.class);
+        startService(intent);
     }
 
     @Override
