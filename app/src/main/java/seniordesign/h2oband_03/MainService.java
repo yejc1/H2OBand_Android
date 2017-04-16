@@ -19,6 +19,9 @@ import java.net.SocketTimeoutException;
 
 public class MainService extends Service {
 
+    //private final MonitorThread monitorThread = new MonitorThread();
+    private final RunThread runThread = new RunThread();
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -26,22 +29,29 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //new MonitorThread().start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(!Thread.interrupted()) {
-                    Log.d("MainService", "Running main service");
+        //monitorThread.start();
+        if(!runThread.isAlive() || runThread.isInterrupted())
+            runThread.start();
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch(InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        return START_STICKY;
+    }
+
+    private class RunThread extends Thread implements Runnable {
+        @Override
+        public void run() {
+            int x = 0;
+
+            while(!Thread.interrupted()) {
+                Log.d("RunThread", "x = " + x);
+                x++;
+
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        }).start();
-        return START_STICKY;
+        }
     }
 
     private class MonitorThread extends Thread implements Runnable {
@@ -67,6 +77,8 @@ public class MainService extends Service {
                 try {
                     socket = serverSocket.accept();
                     Log.d("MonitorThread", "Received connection");
+
+                    Intent intent = new Intent("update");
 
                     String result = "";
                     BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
