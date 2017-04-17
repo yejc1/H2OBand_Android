@@ -1,10 +1,14 @@
 package seniordesign.h2oband_03;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -29,7 +33,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MonitorThread monitorThread = null;
-    private Handler handler = new Handler();
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("update"))
+                Log.d("MainActivity", "x = " + intent.getExtras().getInt("val"));
+        }
+    };
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -48,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // App settings
+        /* ********************************************************************************** */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -67,29 +78,54 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        monitorThread = new MonitorThread();
+
+
+
+
+
+        // Service settings
+        /* ********************************************************************************** */
+
+        /* monitorThread = new MonitorThread();
         monitorThread.start();
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show(); */
 
         Intent intent = new Intent(getApplicationContext(), MainService.class);
         startService(intent);
+
+        registerReceiver(broadcastReceiver, new IntentFilter("update"));
+
+
+
+
+
+
+        // Clear all notifications associated with app
+        /* ********************************************************************************** */
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
+        nBuilder.setAutoCancel(true);
     }
 
-    @Override
+    /* @Override
     public void onResume() {
         super.onResume();
         if(monitorThread != null && !monitorThread.isAlive())
             monitorThread.start();
-    }
+    } */
 
-    @Override
+    /* @Override
     public void onStop() {
         super.onStop();
         if(monitorThread != null && monitorThread.isAlive() && !monitorThread.isInterrupted())
             monitorThread.interrupt();
+    } */
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
     }
 
     @Override

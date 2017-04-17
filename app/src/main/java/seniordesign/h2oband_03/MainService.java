@@ -1,8 +1,11 @@
 package seniordesign.h2oband_03;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -22,6 +25,18 @@ public class MainService extends Service {
     //private final MonitorThread monitorThread = new MonitorThread();
     private final RunThread runThread = new RunThread();
 
+    NotificationCompat.Builder nBuilder;
+
+
+
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        nBuilder = new NotificationCompat.Builder(this);
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -36,17 +51,48 @@ public class MainService extends Service {
         return START_STICKY;
     }
 
+
+
+
+
+
+    private void sendNotification() {
+        nBuilder.setSmallIcon(R.drawable.bottle);
+        nBuilder.setTicker("You need to drink more water");
+        nBuilder.setWhen(System.currentTimeMillis());
+        nBuilder.setContentTitle("H2OBand");
+        nBuilder.setContentText("you need to drink more water");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        nBuilder.setContentIntent(pendingIntent);
+        NotificationManager nManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        nManager.notify(20, nBuilder.build());
+    }
+
+
+
+
+
     private class RunThread extends Thread implements Runnable {
         @Override
         public void run() {
+            Log.d("MainService", "Starting thread");
+
             int x = 0;
 
             while(!Thread.interrupted()) {
                 Log.d("RunThread", "x = " + x);
+                Intent intent = new Intent("update");
+                intent.putExtra("val", x);
+                sendBroadcast(intent);
                 x++;
 
+                sendNotification();
+
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch(InterruptedException e) {
                     e.printStackTrace();
                 }
