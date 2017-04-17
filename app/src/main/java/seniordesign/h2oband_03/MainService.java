@@ -51,20 +51,53 @@ public class MainService extends Service {
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
             mNotificationIntervalSeconds = 15;
-            mGoal30Sec = 0;
+            mGoal30Sec = 5;
 
             mPercentFullLastCheckpoint = BOTTLE_MAX;
             mLastCheckpoint = System.currentTimeMillis();
         }
 
+        /**
+         * Increments or decrements the stored information about the bottle
+         */
         void updatePercentFull() {
-            mPercentFull += mDrainVelocity;
+            if(mPercentFull == 0)
+                return;
+
+            mPercentFull -= mDrainVelocity;
+            if(mPercentFull < 0) {
+                mPercentFull = 0;
+            }
         }
 
+        /**
+         * Determines whether the goal for the amount of water to drink has been satisfied
+         * @return  True if the goal has been achieved
+     *   *          False otherwise
+         */
         boolean goalAchieved() {
-            int goal = (int)((System.currentTimeMillis() - mLastCheckpoint) * mGoal30Sec / 30);
-            return mPercentFull - mPercentFullLastCheckpoint > mGoal30Sec;
+            int goal = mNotificationIntervalSeconds * mGoal30Sec / 30;
+            return mPercentFullLastCheckpoint - mPercentFull >= goal;
         }
+
+        /**
+         * Determines whether the system has waited the required time interval betewen notficiations
+         * @return  True if enough time has passed between last checkpoint and current time
+         *          False otherwise
+         */
+        boolean notificationTimeIntervalAchieved() {
+            if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
+                    mNotificationIntervalSeconds) {
+                mLastCheckpoint = System.currentTimeMillis();
+                return true;
+            }
+            return false;
+        }
+
+
+
+
+        /* **************** Setters and getters **************** */
 
         void setDrainVelocity(int drainVelocity) {
             mDrainVelocity = drainVelocity;
@@ -172,6 +205,9 @@ public class MainService extends Service {
 
     @Override
     public void onDestroy() {
+        if(h2oThread.isAlive() && !h2oThread.isInterrupted())
+            h2oThread.interrupt();
+
         unregisterReceiver(broadcastReceiver);
         super.onDestroy();
     }
@@ -266,8 +302,13 @@ public class MainService extends Service {
          * requirement
          */
         private void checkNotification() {
-            if(!info.goalAchieved())
-                sendNotification();
+            if(info.notificationTimeIntervalAchieved()) {
+                Log.d("MainService", "Checking if goal is achieved");
+                if(!info.goalAchieved()) {
+                    Log.d("MainService", "Goal is not achieved");
+                    sendNotification();
+                }
+            }
         }
 
         /**
