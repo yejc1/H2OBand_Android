@@ -296,14 +296,20 @@ public class MainService extends Service {
                 Socket socket = mServerSocket.accept();
                 Log.d("MonitorThread", "Received connection");
 
-                byte counter = 0;
+                /* byte counter = 0;
                 int drainVelocity = 0;
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 for (byte c = (byte) input.read(); c != 0; c = (byte) input.read())
                     drainVelocity += (c << (8 * counter++));
                 info.setDrainVelocity(drainVelocity);
 
-                Log.d("MonitorThread", "mDrainVelocity = " + drainVelocity);
+                Log.d("MonitorThread", "mDrainVelocity = " + drainVelocity); */
+
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String result = "";
+                for(char c = (char)input.read(); c != 0; c = (char)input.read())
+                    result += c;
+                Log.d("H2OUpdateThread", "Socket read: " + result);
 
                 OutputStream output = socket.getOutputStream();
                 output.write(response.getBytes());
