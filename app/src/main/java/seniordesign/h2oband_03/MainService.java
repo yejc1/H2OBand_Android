@@ -36,38 +36,51 @@ public class MainService extends Service {
 
     /* **************** Bottle Info **************** */
     private class H2OBand_Info {
-        private final int BOTTLE_MAX = 100;
+        private final int BOTTLE_MAX = 100;         // The maximum amount of water in bottle
+        private final int BOTTLE_UPDATE_TIME = 100; // The amount of time to wait after updating bottle
 
-        private int mDrainVelocity;
-        private int mPercentFull;
-        private int mNotificationIntervalSeconds;
-        private int mGoal30Sec;
 
-        private int mPercentFullLastCheckpoint;
-        private long mLastCheckpoint;
+
+        private int mDrainVelocity;                 // Drain velocity (per 100 milliseconds)
+        private int mPercentFull;                   // The maximum amount of water in bottle
+        private int mGoal30Sec;                     // Amount of water to drink within 30 seconds
+
+        private int mPercentFullLastCheckpoint;     // The percentage full at the last checkpoint
+
+        // TIMING
+        private int mNotificationIntervalSeconds;   // Number of seconds to wait before sending notification
+        private long mLastCheckpoint;               // The time of the last checkpoint
+        private long mLastUpdate;
 
         public H2OBand_Info() {
             /* Initial bottle settings */
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
-            mNotificationIntervalSeconds = 15;
             mGoal30Sec = 5;
 
             mPercentFullLastCheckpoint = BOTTLE_MAX;
+
+            // Timing
+            mNotificationIntervalSeconds = 15;
             mLastCheckpoint = System.currentTimeMillis();
+            mLastUpdate = System.currentTimeMillis();
         }
 
         /**
          * Increments or decrements the stored information about the bottle
          */
         void updatePercentFull() {
-            if(mPercentFull == 0)
+            if(System.currentTimeMillis() - mLastUpdate < BOTTLE_UPDATE_TIME)
                 return;
 
+            if(mPercentFull == 0)
+                return;
             mPercentFull -= mDrainVelocity;
             if(mPercentFull < 0) {
                 mPercentFull = 0;
             }
+
+            mLastUpdate = System.currentTimeMillis();
         }
 
         /**
@@ -86,12 +99,15 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean notificationTimeIntervalAchieved() {
+            boolean timeAchieved = false;
+
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
-                return true;
+                timeAchieved = true;
             }
-            return false;
+            mPercentFullLastCheckpoint = mPercentFull;
+            return timeAchieved;
         }
 
 
@@ -248,6 +264,10 @@ public class MainService extends Service {
         @Override
         public void run() {
             while(!Thread.interrupted()) {
+                // Update the contents of the bottle
+                info.updatePercentFull();
+
+
                 if (monitorSocket()) {
                     Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
                     intent.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
