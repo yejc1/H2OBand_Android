@@ -267,11 +267,12 @@ public class MainService extends Service {
                 // Update the contents of the bottle
                 info.updatePercentFull();
 
-
-                if (monitorSocket()) {
-                    Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
+                String cmd = monitorSocket();
+                if (cmd != null) {
+                    processCommand(cmd);
+                    /* Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
                     intent.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
-                    sendBroadcast(intent);
+                    sendBroadcast(intent); */
                 }
                 checkNotification();
             }
@@ -286,15 +287,14 @@ public class MainService extends Service {
          * @return  True if drain velocity has been changed
          *          False otherwise
          */
-        private boolean monitorSocket() {
+        private String monitorSocket() {
             if(mServerSocket == null)
-                return false;
+                return null;
 
             final String response = "Received";
 
             try {
                 Socket socket = mServerSocket.accept();
-                Log.d("MonitorThread", "Received connection");
 
                 /* byte counter = 0;
                 int drainVelocity = 0;
@@ -316,9 +316,17 @@ public class MainService extends Service {
 
                 socket.close();
 
-                return true;
+                return result;
             } catch(IOException e) {
-                return false;
+                return null;
+            }
+        }
+
+        private void processCommand(String cmd) {
+            if(cmd.contains("d_vel")) {
+                Log.d("H2OUpdateThread", "Updating drain velocity");
+            } else if(cmd.contains("reset")) {
+                Log.d("H2OUpdateThread", "Resetting");
             }
         }
 
@@ -329,7 +337,6 @@ public class MainService extends Service {
          */
         private void checkNotification() {
             if(info.notificationTimeIntervalAchieved()) {
-                Log.d("MainService", "Checking if goal is achieved");
                 if(!info.goalAchieved()) {
                     Log.d("MainService", "Goal is not achieved");
                     sendNotification();
