@@ -24,10 +24,13 @@ import java.net.SocketTimeoutException;
  */
 
 public class MainService extends Service {
+    // Intent actions
     public static final String ACTION_UPDATE_DRAIN_VELOCITY = "update_d_vel";
     public static final String ACTION_UPDATE_NOTIFICATION_INT = "update_not_int";
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
+
+    // Intent Extra labels
     public static final String INTENT_DRAIN_VELOCITY = "d_vel";
     public static final String INTENT_PERCENT_FULL = "per_full";
     public static final String INTENT_NOTIF_INT = "not_int";
@@ -329,6 +332,11 @@ public class MainService extends Service {
                 try {
                     int d_vel = Integer.valueOf(args[1]);
                     info.setDrainVelocity(d_vel);
+
+
+                    Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
+                    intent.putExtra(INTENT_DRAIN_VELOCITY, d_vel);
+                    sendBroadcast(intent);
                 } catch(NumberFormatException e) {
                     e.printStackTrace();
                 }

@@ -36,8 +36,15 @@ public class MainActivity extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("update"))
-                Log.d("MainActivity", "x = " + intent.getExtras().getInt("val"));
+            if(intent.getAction().equals(MainService.ACTION_UPDATE_DRAIN_VELOCITY)) {
+                Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+            } else if(intent.getAction().equals(MainService.ACTION_INFO_UPDATE)) {
+                Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));
+                Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
+                Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
+
+            }
         }
     };
 
@@ -95,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainService.class);
         startService(intent);
 
-        registerReceiver(broadcastReceiver, new IntentFilter("update"));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MainService.ACTION_UPDATE_DRAIN_VELOCITY);
+        intentFilter.addAction(MainService.ACTION_INFO_UPDATE);
+        registerReceiver(broadcastReceiver, intentFilter);
 
 
 
