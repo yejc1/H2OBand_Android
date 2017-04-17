@@ -89,8 +89,12 @@ public class MainService extends Service {
      *   *          False otherwise
          */
         boolean goalAchieved() {
+            boolean achieved;
             int goal = mNotificationIntervalSeconds * mGoal30Sec / 30;
-            return mPercentFullLastCheckpoint - mPercentFull >= goal;
+            achieved = mPercentFullLastCheckpoint - mPercentFull >= goal;
+            mPercentFullLastCheckpoint = mPercentFull;
+
+            return achieved;
         }
 
         /**
@@ -99,15 +103,12 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean notificationTimeIntervalAchieved() {
-            boolean timeAchieved = false;
-
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
-                timeAchieved = true;
+                return true;
             }
-            mPercentFullLastCheckpoint = mPercentFull;
-            return timeAchieved;
+            return false;
         }
 
 
@@ -309,7 +310,6 @@ public class MainService extends Service {
                 String result = "";
                 for(char c = (char)input.read(); c != 0; c = (char)input.read())
                     result += c;
-                Log.d("H2OUpdateThread", "Socket read: " + result);
 
                 OutputStream output = socket.getOutputStream();
                 output.write(response.getBytes());
@@ -325,6 +325,13 @@ public class MainService extends Service {
         private void processCommand(String cmd) {
             if(cmd.contains("d_vel")) {
                 Log.d("H2OUpdateThread", "Updating drain velocity");
+                String[] args = cmd.split(" ");
+                try {
+                    int d_vel = Integer.valueOf(args[1]);
+                    info.setDrainVelocity(d_vel);
+                } catch(NumberFormatException e) {
+                    e.printStackTrace();
+                }
             } else if(cmd.contains("reset")) {
                 Log.d("H2OUpdateThread", "Resetting");
             }
@@ -340,6 +347,9 @@ public class MainService extends Service {
                 if(!info.goalAchieved()) {
                     Log.d("MainService", "Goal is not achieved");
                     sendNotification();
+                }
+                else {
+                    Log.d("MainService", "Goal is achieved");
                 }
             }
         }
