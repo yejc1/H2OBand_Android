@@ -32,12 +32,21 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    static final int MSG_D_VEL = 0;
+
+
+
     MonitorThread monitorThread = null;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(MainService.ACTION_UPDATE_DRAIN_VELOCITY)) {
                 Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                int position = mViewPager.getCurrentItem();
+                Message msg = new Message();
+                msg.what = MSG_D_VEL;
+                msg.setData(intent.getExtras());
+                ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
             } else if(intent.getAction().equals(MainService.ACTION_INFO_UPDATE)) {
                 Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
                 Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));

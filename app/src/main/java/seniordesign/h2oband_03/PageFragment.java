@@ -1,5 +1,6 @@
 package seniordesign.h2oband_03;
 
+import android.os.Message;
 import android.support.v4.app.Fragment;
 
 /**
@@ -7,6 +8,8 @@ import android.support.v4.app.Fragment;
  */
 
 public class PageFragment extends Fragment {
+
+    public void handleMessage(Message msg) {}
 
     /**
      * Handles the back pressed button

@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Random;
 
 /**
  * Created by saumil on 4/16/17.
@@ -169,6 +170,31 @@ public class MainService extends Service {
     }
     H2OBand_Info info;
 
+    private class TestUpdate {
+        private final int INTERVAL = 2;
+
+        private long mLastUpdate;
+        private Random random;
+
+        public TestUpdate() {
+            mLastUpdate = System.currentTimeMillis();
+            random = new Random();
+        }
+
+        public void update() {
+            if((System.currentTimeMillis() - mLastUpdate) / 1000 >= INTERVAL) {
+                int rand_d_vel = Math.abs(random.nextInt() % 5);
+
+                Log.i("TestUpdate", "Sending new drain velocity: " + rand_d_vel);
+                Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
+                intent.putExtra(INTENT_DRAIN_VELOCITY, rand_d_vel);
+                sendBroadcast(intent);
+                mLastUpdate = System.currentTimeMillis();
+            }
+        }
+    }
+    TestUpdate tester;
+
 
 
 
@@ -205,6 +231,7 @@ public class MainService extends Service {
         nBuilder = new NotificationCompat.Builder(this);
 
         info = new H2OBand_Info();
+        tester = new TestUpdate();
 
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT));
     }
@@ -255,7 +282,7 @@ public class MainService extends Service {
         /**
          * Configures the server socket and initializes the initial bottle properties
          */
-        public H2OBandUpdateThread() {
+        H2OBandUpdateThread() {
             /* Configure server settings */
             try {
                 mServerSocket = new ServerSocket(PORT, BACKLOG);
@@ -272,13 +299,10 @@ public class MainService extends Service {
                 info.updatePercentFull();
 
                 String cmd = monitorSocket();
-                if (cmd != null) {
+                if(cmd != null)
                     processCommand(cmd);
-                    /* Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
-                    intent.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
-                    sendBroadcast(intent); */
-                }
                 checkNotification();
+                tester.update();
             }
         }
 
