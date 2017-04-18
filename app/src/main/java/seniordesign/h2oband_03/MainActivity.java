@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     static final int MSG_D_VEL = 0;
+    static final int INFO_UPDATE = 1;
 
 
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(MainService.ACTION_UPDATE_DRAIN_VELOCITY)) {
                 Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+
                 int position = mViewPager.getCurrentItem();
                 Message msg = new Message();
                 msg.what = MSG_D_VEL;
@@ -53,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
                 Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
 
+                int position = mViewPager.getCurrentItem();
+                Message msg = new Message();
+                msg.what = INFO_UPDATE;
+                msg.setData(intent.getExtras());
+                ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
             }
         }
     };

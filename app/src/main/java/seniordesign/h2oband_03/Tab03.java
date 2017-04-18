@@ -4,6 +4,7 @@ package seniordesign.h2oband_03;
  * Created by Owner on 1/25/2017.
  */
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -173,10 +175,49 @@ public class Tab03 extends PageFragment {
             to_dropdown.setAdapter(to_adapter);
 
             Spinner interval_dropdown = (Spinner) notifications_frame.findViewById(R.id.interval_spinner);
-            String[] interval_items = new String[]{"5 min","10 min","20 min","30 min","1 hour","1.5 hour","2 hour","2.5 hour"};
-            ArrayAdapter<String> interval_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, interval_items);
+            //String[] interval_items = new String[]{"5 min","10 min","20 min","30 min","1 hour","1.5 hour","2 hour","2.5 hour"};
+            String[] interval_items = new String[]{"15 sec","25 sec","35 sec","45 sec", "1 min"};
+            final ArrayAdapter<String> interval_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, interval_items);
             interval_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             interval_dropdown.setAdapter(interval_adapter);
+            interval_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    String sel_item = interval_adapter.getItem(i);
+                    int num_seconds_interval;
+
+                    if(sel_item == null)
+                        return;
+
+
+                    switch(sel_item) {
+                        case "15 sec":
+                            num_seconds_interval = 15;
+                            break;
+                        case "25 sec":
+                            num_seconds_interval = 25;
+                            break;
+                        case "35 sec":
+                            num_seconds_interval = 35;
+                            break;
+                        case "45 sec":
+                            num_seconds_interval = 45;
+                            break;
+                        default:
+                            num_seconds_interval = 60;
+                            break;
+                    }
+
+                    Intent intent = new Intent(MainService.ACTION_UPDATE_NOTIFICATION_INT);
+                    intent.putExtra(MainService.INTENT_NOTIF_INT, num_seconds_interval);
+                    getContext().sendBroadcast(intent);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
             Spinner sound_dropdown = (Spinner) notifications_frame.findViewById(R.id.sound_spinner);
             String[] sound_items = new String[]{"Old Phone","Bell"};

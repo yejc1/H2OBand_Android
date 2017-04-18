@@ -94,6 +94,11 @@ public class MainService extends Service {
          */
         boolean goalAchieved() {
             boolean achieved;
+
+            Log.i("MainService", "Drain velocity = " + mDrainVelocity);
+            Log.i("MainService", "Percent full = " + mPercentFull);
+            Log.i("MainService", "Percent full at last checkpoint = " + mPercentFullLastCheckpoint);
+
             int goal = mNotificationIntervalSeconds * mGoal30Sec / 30;
             achieved = mPercentFullLastCheckpoint - mPercentFull >= goal;
             mPercentFullLastCheckpoint = mPercentFull;
@@ -200,7 +205,9 @@ public class MainService extends Service {
 
     /* **************** System **************** */
     private final H2OBandUpdateThread h2oThread = new H2OBandUpdateThread();
+
     NotificationCompat.Builder nBuilder;
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -233,7 +240,9 @@ public class MainService extends Service {
         info = new H2OBand_Info();
         tester = new TestUpdate();
 
-        registerReceiver(broadcastReceiver, new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT));
+        IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
+        intentFilter.addAction(ACTION_INFO_UPDATE);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
@@ -243,7 +252,6 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //monitorThread.start();
         if(!h2oThread.isAlive() || h2oThread.isInterrupted())
             h2oThread.start();
 
@@ -302,7 +310,7 @@ public class MainService extends Service {
                 if(cmd != null)
                     processCommand(cmd);
                 checkNotification();
-                tester.update();
+                //tester.update();
             }
         }
 
@@ -351,7 +359,7 @@ public class MainService extends Service {
 
         private void processCommand(String cmd) {
             if(cmd.contains("d_vel")) {
-                Log.d("H2OUpdateThread", "Updating drain velocity");
+                Log.i("H2OUpdateThread", "Updating drain velocity");
                 String[] args = cmd.split(" ");
                 try {
                     int d_vel = Integer.valueOf(args[1]);
@@ -365,7 +373,7 @@ public class MainService extends Service {
                     e.printStackTrace();
                 }
             } else if(cmd.contains("reset")) {
-                Log.d("H2OUpdateThread", "Resetting");
+                Log.i("H2OUpdateThread", "Resetting");
             }
         }
 
@@ -377,11 +385,11 @@ public class MainService extends Service {
         private void checkNotification() {
             if(info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
-                    Log.d("MainService", "Goal is not achieved");
+                    Log.v("MainService", "Goal is not achieved");
                     sendNotification();
                 }
                 else {
-                    Log.d("MainService", "Goal is achieved");
+                    Log.v("MainService", "Goal is achieved");
                 }
             }
         }
@@ -403,75 +411,6 @@ public class MainService extends Service {
             nBuilder.setContentIntent(pendingIntent);
             NotificationManager nManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
             nManager.notify(20, nBuilder.build());
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private class MonitorThread extends Thread implements Runnable {
-        private final int PORT = 8000;
-        private final int BACKLOG = 5;
-        private final int TIMEOUT = 100;
-
-        @Override
-        public void run() {
-            String response = "Received";
-            ServerSocket serverSocket;
-            Socket socket;
-
-            try {
-                serverSocket = new ServerSocket(PORT, BACKLOG);
-                serverSocket.setSoTimeout(TIMEOUT);
-            } catch(IOException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            while(!Thread.interrupted()) {
-                try {
-                    socket = serverSocket.accept();
-                    Log.d("MonitorThread", "Received connection");
-
-                    Intent intent = new Intent("update");
-
-                    String result = "";
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    for(char c = (char)input.read(); c != 0; c = (char)input.read())
-                        result += c;
-                    Log.d("MonitorThread", result);
-
-                    OutputStream output = socket.getOutputStream();
-                    output.write(response.getBytes());
-
-                    socket.close();
-                } catch(SocketTimeoutException e) {
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-
-            try {
-                serverSocket.close();
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
