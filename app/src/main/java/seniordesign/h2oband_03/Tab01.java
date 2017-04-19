@@ -25,13 +25,25 @@ public class Tab01 extends PageFragment {
 
     @Override
     public void handleMessage(Message msg) {
-        if(msg.what == MainActivity.MSG_D_VEL) {
-            if(getView() != null) {
-                BottleSurfaceView bottleSurfaceView =
-                        (BottleSurfaceView) ((ViewGroup) getView()).getChildAt(0);
-                bottleSurfaceView.changeBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
-            }
+        if(getView() != null) {
+            BottleSurfaceView bottleSurfaceView =
+                    (BottleSurfaceView) ((ViewGroup) getView()).getChildAt(0);
+            bottleSurfaceView.changeBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
+            if(msg.what == MainActivity.INFO_UPDATE)
+                bottleSurfaceView.setBottlePercentage(msg.getData().getInt(MainService.INTENT_PERCENT_FULL));
         }
+
+        /* switch(msg.what) {
+            case MainActivity.MSG_D_VEL:
+                if(getView() != null) {
+                    BottleSurfaceView bottleSurfaceView =
+                            (BottleSurfaceView) ((ViewGroup) getView()).getChildAt(0);
+                    bottleSurfaceView.changeBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                }
+                break;
+            case MainActivity.INFO_UPDATE:
+                break;
+        } */
     }
 
     @Override
@@ -39,7 +51,6 @@ public class Tab01 extends PageFragment {
                              Bundle savedInstanceState) {
         //RelativeLayout mealLayout = (RelativeLayout) rootView.findViewById(R.id.background);
 
-        Log.d("Tab01", "Requesting information");
         getContext().sendBroadcast(new Intent(MainService.ACTION_REQUEST_INFO));
         return inflater.inflate(R.layout.page01, container, false);
     }

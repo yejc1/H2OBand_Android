@@ -83,6 +83,10 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
             mDrainVelocity = d_vel;
         }
 
+        void setPercentageComplete(int percentage) {
+            percentageComplete = 100 - percentage;
+        }
+
 
         private void importBitmap() {
             empty_bottle = BitmapFactory.decodeResource(getContext().getResources(),
@@ -195,5 +199,9 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public void changeBottleDVel(int d_vel) {
         bottle.setDrainVelocity(d_vel);
+    }
+
+    public void setBottlePercentage(int percentage) {
+        bottle.setPercentageComplete(percentage);
     }
 }

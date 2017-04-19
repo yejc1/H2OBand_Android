@@ -244,15 +244,12 @@ public class MainService extends Service {
                     info.setGoal30Sec(intent.getExtras().getInt(INTENT_GOAL_30_SEC));
                     break;
                 case ACTION_REQUEST_INFO:
-                    Log.d("MainService", "Servicing info request");
-
                     Intent response = new Intent(ACTION_INFO_UPDATE);
                     response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
                     response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
                     response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
                     response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
                     response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
-
                     sendBroadcast(response);
                     break;
             }
