@@ -36,6 +36,9 @@ public class Tab01 extends PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //RelativeLayout mealLayout = (RelativeLayout) rootView.findViewById(R.id.background);
+
+
+
         return inflater.inflate(R.layout.page01, container, false);
     }
 }

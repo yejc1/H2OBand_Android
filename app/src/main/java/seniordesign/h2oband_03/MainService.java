@@ -27,6 +27,7 @@ public class MainService extends Service {
     // Intent actions
     public static final String ACTION_UPDATE_DRAIN_VELOCITY = "update_d_vel";
     public static final String ACTION_UPDATE_NOTIFICATION_INT = "update_not_int";
+    public static final String ACTION_UPDATE_GOAL = "update_goal";
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
     public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
@@ -108,6 +109,9 @@ public class MainService extends Service {
             Log.i("MainService", "Percent full at last checkpoint = " + mPercentFullLastCheckpoint);
 
             int goal = mNotificationIntervalSeconds * mGoal30Sec / 30;
+
+            Log.i("MainService", "Goal = " + goal);
+
             achieved = mPercentFullLastCheckpoint - mPercentFull >= goal;
             mPercentFullLastCheckpoint = mPercentFull;
 
@@ -236,6 +240,9 @@ public class MainService extends Service {
                 case ACTION_UPDATE_FROM_TIME:
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
                     break;
+                case ACTION_UPDATE_GOAL:
+                    info.setGoal30Sec(intent.getExtras().getInt(INTENT_GOAL_30_SEC));
+                    break;
                 case ACTION_REQUEST_INFO:
                     Intent response = new Intent(ACTION_INFO_UPDATE);
                     response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
@@ -271,6 +278,7 @@ public class MainService extends Service {
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
         intentFilter.addAction(ACTION_INFO_UPDATE);
         intentFilter.addAction(ACTION_UPDATE_FROM_TIME);
+        intentFilter.addAction(ACTION_UPDATE_GOAL);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 

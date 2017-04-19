@@ -101,6 +101,8 @@ public class Tab03 extends PageFragment {
      * @param selection    The selected button
      */
     private void switchPage(PageSelection selection) {
+        if(getView() == null)
+            return;
         FrameLayout settings_frame = (FrameLayout)getView().findViewById(R.id.settings_frame);
         ViewGroup sub_frame = (ViewGroup)settings_frame.getChildAt(0);
         sub_frame.setVisibility(View.GONE);

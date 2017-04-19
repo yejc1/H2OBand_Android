@@ -39,26 +39,25 @@ public class MainActivity extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(MainService.ACTION_UPDATE_DRAIN_VELOCITY)) {
-                Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+            int position = mViewPager.getCurrentItem();
+            Message msg = new Message();
 
-                int position = mViewPager.getCurrentItem();
-                Message msg = new Message();
-                msg.what = MSG_D_VEL;
-                msg.setData(intent.getExtras());
-                ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
-            } else if(intent.getAction().equals(MainService.ACTION_INFO_UPDATE)) {
-                Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
-                Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));
-                Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
-                Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
-
-                int position = mViewPager.getCurrentItem();
-                Message msg = new Message();
-                msg.what = INFO_UPDATE;
-                msg.setData(intent.getExtras());
-                ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
+            switch(intent.getAction()) {
+                case MainService.ACTION_UPDATE_DRAIN_VELOCITY:
+                    Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                    msg.what = MSG_D_VEL;
+                    break;
+                case MainService.ACTION_INFO_UPDATE:
+                    Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                    Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));
+                    Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
+                    Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
+                    msg.what = INFO_UPDATE;
+                    break;
             }
+
+            msg.setData(intent.getExtras());
+            ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
         }
     };
 
@@ -111,16 +110,15 @@ public class MainActivity extends AppCompatActivity {
         /* ********************************************************************************** */
 
         /* monitorThread = new MonitorThread();
-        monitorThread.start();
+        monitorThread.start(); */
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show(); */
+        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getApplicationContext(), MainService.class);
         startService(intent);
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MainService.ACTION_UPDATE_DRAIN_VELOCITY);
+        IntentFilter intentFilter = new IntentFilter(MainService.ACTION_UPDATE_DRAIN_VELOCITY);
         intentFilter.addAction(MainService.ACTION_INFO_UPDATE);
         registerReceiver(broadcastReceiver, intentFilter);
 
