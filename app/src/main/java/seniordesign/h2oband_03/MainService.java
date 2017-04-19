@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.Random;
 
 /**
@@ -30,7 +29,7 @@ public class MainService extends Service {
     public static final String ACTION_UPDATE_NOTIFICATION_INT = "update_not_int";
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
-    public static final String ACTION_UPDATE_FROM_INT = "update_from_int";
+    public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
 
 
     // Intent Extra labels
@@ -124,9 +123,9 @@ public class MainService extends Service {
             // if current time is late than the from time
             if(System.currentTimeMillis() > getFromSeconds())
             {
-                 // Log.i("MainService", "Notification Invertal Second = " + mNotificationIntervalSeconds);
-                Log.i("MainService", "Currentime is = " + System.currentTimeMillis());
-                Log.i("MainService", "from time is = " + getFromSeconds());
+                /* //Log.i("H2OBand_Info", "Notification Invertal Second = " + mNotificationIntervalSeconds);
+                Log.i("H2OBand_Info", "Currentime is = " + System.currentTimeMillis());
+                Log.i("H2OBand_Info", "from time is = " + getFromSeconds()); */
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
@@ -230,23 +229,23 @@ public class MainService extends Service {
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_UPDATE_NOTIFICATION_INT)) {
-                info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
+            switch(intent.getAction()) {
+                case ACTION_UPDATE_NOTIFICATION_INT:
+                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
+                    break;
+                case ACTION_UPDATE_FROM_TIME:
+                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
+                    break;
+                case ACTION_REQUEST_INFO:
+                    Intent response = new Intent(ACTION_INFO_UPDATE);
+                    response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
+                    response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
+                    response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
+                    response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
+                    response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
 
-            }
-
-            if(intent.getAction().equals(ACTION_UPDATE_FROM_INT)) {
-                info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
-
-            }else if(intent.getAction().equals(ACTION_REQUEST_INFO)) {
-                Intent response = new Intent(ACTION_INFO_UPDATE);
-                response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
-                response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
-                response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
-                response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
-                response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
-
-                sendBroadcast(intent);
+                    sendBroadcast(intent);
+                    break;
             }
         }
     };
@@ -270,12 +269,9 @@ public class MainService extends Service {
         tester = new TestUpdate();
 
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
-        IntentFilter intentFilter2 = new IntentFilter(ACTION_UPDATE_FROM_INT);
         intentFilter.addAction(ACTION_INFO_UPDATE);
+        intentFilter.addAction(ACTION_UPDATE_FROM_TIME);
         registerReceiver(broadcastReceiver, intentFilter);
-        registerReceiver(broadcastReceiver, intentFilter2);
-
-
     }
 
     @Override

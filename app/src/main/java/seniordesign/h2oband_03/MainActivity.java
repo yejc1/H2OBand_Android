@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     static final int INFO_UPDATE = 1;
 
 
-
-    MonitorThread monitorThread = null;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -78,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,20 +135,6 @@ public class MainActivity extends AppCompatActivity {
         nBuilder.setAutoCancel(true);
     }
 
-    /* @Override
-    public void onResume() {
-        super.onResume();
-        if(monitorThread != null && !monitorThread.isAlive())
-            monitorThread.start();
-    } */
-
-    /* @Override
-    public void onStop() {
-        super.onStop();
-        if(monitorThread != null && monitorThread.isAlive() && !monitorThread.isInterrupted())
-            monitorThread.interrupt();
-    } */
-
     @Override
     public void onDestroy() {
         unregisterReceiver(broadcastReceiver);
@@ -191,26 +178,6 @@ public class MainActivity extends AppCompatActivity {
             if(position > pages.size())
                 return null;
             return pages.get(position);
-
-            /* switch (position) {
-                case 0:
-                    return new Tab01();
-                case 1:
-                    return new Tab02();
-                case 2:
-                    return new Tab03();
-                case 3:
-                    return new Tab04();
-                case 4:
-                    return new Tab05();
-                case 5:
-                    return new Tab06();
-                case 6:
-                    return new Tab07();
-
-                default:
-                    return null;
-            } */
         }
 
         @Override
@@ -238,76 +205,6 @@ public class MainActivity extends AppCompatActivity {
                     return "Init2";
                 default:
                     return "";
-            }
-        }
-    }
-
-    private class SendThread extends Thread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                String text = "halt";
-
-                Socket socket = new Socket("192.168.1.101", 80);
-                OutputStream output = socket.getOutputStream();
-                output.write(text.getBytes());
-
-                String response = "";
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                for(String current = input.readLine(); current != null; current = input.readLine())
-                    response += current;
-                Log.d("SendThread", response);
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class MonitorThread extends Thread implements Runnable {
-        private final int PORT = 8000;
-        private final int BACKLOG = 5;
-        private final int TIMEOUT = 100;
-
-        @Override
-        public void run() {
-            String response = "Received";
-            ServerSocket serverSocket;
-            Socket socket;
-
-            try {
-                serverSocket = new ServerSocket(PORT, BACKLOG);
-                serverSocket.setSoTimeout(TIMEOUT);
-            } catch(IOException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            while(!Thread.interrupted()) {
-                try {
-                    socket = serverSocket.accept();
-                    Log.d("MonitorThread", "Received connection");
-
-                    String result = "";
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    for(char c = (char)input.read(); c != 0; c = (char)input.read())
-                        result += c;
-                    Log.d("MonitorThread", result);
-
-                    OutputStream output = socket.getOutputStream();
-                    output.write(response.getBytes());
-
-                    socket.close();
-                } catch(SocketTimeoutException e) {
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-
-            try {
-                serverSocket.close();
-            } catch(IOException e) {
-                e.printStackTrace();
             }
         }
     }

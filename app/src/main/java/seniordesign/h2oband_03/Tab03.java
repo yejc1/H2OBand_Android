@@ -5,8 +5,6 @@ package seniordesign.h2oband_03;
  */
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -68,6 +66,25 @@ public class Tab03 extends PageFragment {
         settings_frame.getChildAt(0).setVisibility(View.VISIBLE);
 
         return true;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d("Tab03", "Saving instance");
+        super.onSaveInstanceState(outState);
+        outState.putInt("fron",from_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("to",to_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("interval",interval_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("sound",sound_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("vibration",vibration_dropdown
+                .getSelectedItemPosition());
+        // do this for each or your Spinner
+        // You might consider using Bundle.putStringArray() instead
     }
 
     @Override
@@ -251,7 +268,7 @@ public class Tab03 extends PageFragment {
 
                 }
                 Log.i("Tab03", "from interval is " + num_from_interval);
-                Intent intent = new Intent(MainService.ACTION_UPDATE_FROM_INT);
+                Intent intent = new Intent(MainService.ACTION_UPDATE_FROM_TIME);
                 intent.putExtra(MainService.INTENT_FROM_INT, num_from_interval);
                 getContext().sendBroadcast(intent);
 
@@ -360,28 +377,6 @@ public class Tab03 extends PageFragment {
         transaction.replace(R.id.page03, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-
-
-
-        super.onSaveInstanceState(outState);
-        outState.putInt("fron",from_dropdown
-                .getSelectedItemPosition());
-        outState.putInt("to",to_dropdown
-                .getSelectedItemPosition());
-        outState.putInt("interval",interval_dropdown
-                .getSelectedItemPosition());
-        outState.putInt("sound",sound_dropdown
-                .getSelectedItemPosition());
-        outState.putInt("vibration",vibration_dropdown
-                .getSelectedItemPosition());
-        // do this for each or your Spinner
-        // You might consider using Bundle.putStringArray() instead
     }
 
 }
