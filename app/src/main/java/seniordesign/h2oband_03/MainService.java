@@ -38,6 +38,7 @@ public class MainService extends Service {
     public static final String INTENT_PERCENT_FULL = "per_full";
     public static final String INTENT_NOTIF_INT = "not_int";
     public static final String INTENT_GOAL_30_SEC = "goal30sec";
+    public static final String INTENT_GOAL_OZ = "goal_oz";
     public static final String INTENT_FROM_INT = "from_int";
 
 
@@ -51,6 +52,9 @@ public class MainService extends Service {
         private int mDrainVelocity;                 // Drain velocity (per 100 milliseconds)
         private int mPercentFull;                   // The maximum amount of water in bottle
         private int mGoal30Sec;                     // Amount of water to drink within 30 seconds
+
+        private int mGoalOZ;                        // The goal in ounces based on a person's weight
+                                                    // This value is currently only used for display
 
         private int mPercentFullLastCheckpoint;     // The percentage full at the last checkpoint
 
@@ -67,6 +71,8 @@ public class MainService extends Service {
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
             mGoal30Sec = 5;
+
+            mGoalOZ = 73;
 
             mPercentFullLastCheckpoint = BOTTLE_MAX;
 
@@ -159,6 +165,10 @@ public class MainService extends Service {
             mGoal30Sec = goal;
         }
 
+        void setGoalOZ(int goalOZ) {
+            mGoalOZ = goalOZ;
+        }
+
         void setLastCheckpoint(long checkpoint) {
             mLastCheckpoint = checkpoint;
         }
@@ -183,6 +193,10 @@ public class MainService extends Service {
 
         int getGoal30Sec() {
             return mGoal30Sec;
+        }
+
+        int getGoalOZ() {
+            return mGoalOZ;
         }
 
         long getLastCheckpoint() {
@@ -241,7 +255,8 @@ public class MainService extends Service {
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
                     break;
                 case ACTION_UPDATE_GOAL:
-                    info.setGoal30Sec(intent.getExtras().getInt(INTENT_GOAL_30_SEC));
+                    Log.d("MainService", "Updating goal");
+                    info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
                     break;
                 case ACTION_REQUEST_INFO:
                     Intent response = new Intent(ACTION_INFO_UPDATE);
@@ -249,6 +264,7 @@ public class MainService extends Service {
                     response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
                     response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
                     response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
+                    response.putExtra(INTENT_GOAL_OZ, info.getGoalOZ());
                     response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
                     sendBroadcast(response);
                     break;

@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     static final int MSG_D_VEL = 0;
     static final int INFO_UPDATE = 1;
 
-
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -48,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     msg.what = MSG_D_VEL;
                     break;
                 case MainService.ACTION_INFO_UPDATE:
-                    Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                    /* Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
                     Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));
                     Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
                     Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
+                    Log.d("MainActivity", "goal OZ = " + intent.getExtras().getInt(MainService.INTENT_GOAL_OZ)); */
                     msg.what = INFO_UPDATE;
                     break;
             }

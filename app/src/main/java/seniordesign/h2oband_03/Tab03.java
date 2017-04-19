@@ -176,7 +176,6 @@ public class Tab03 extends PageFragment {
                 }
             });
             Log.d("Tab03", "Setting age: " + age);
-            //age_edit.setText("" + age);
             age_edit.setText(new StringBuilder("" + age));
 
 
@@ -198,11 +197,10 @@ public class Tab03 extends PageFragment {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-
+                    updateGoal();
                 }
             });
             Log.d("Tab03", "Setting weight: " + weight);
-            //weight_edit.setText("" + weight);
             weight_edit.setText(new StringBuilder("" + weight));
 
             Spinner gender_dropdown = (Spinner) notifications_frame.findViewById(R.id.gender_spinner);
@@ -324,6 +322,15 @@ public class Tab03 extends PageFragment {
             vibration_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             vibration_dropdown.setAdapter(vibration_adapter);
         }
+    }
+
+    private void updateGoal() {
+        int new_goal = weight * 2 / 3;
+        Log.d("Tab03", "new_goal = " + new_goal);
+
+        Intent intent = new Intent(MainService.ACTION_UPDATE_GOAL);
+        intent.putExtra(MainService.INTENT_GOAL_OZ, new_goal);
+        getContext().sendBroadcast(intent);
     }
 }
 
