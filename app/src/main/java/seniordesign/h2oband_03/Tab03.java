@@ -5,6 +5,8 @@ package seniordesign.h2oband_03;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +21,26 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 public class Tab03 extends PageFragment {
+
+    Spinner from_dropdown;
+    Spinner to_dropdown;
+    Spinner interval_dropdown;
+    Spinner sound_dropdown;
+    Spinner vibration_dropdown;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // initialize all your visual fields
+        if (savedInstanceState != null) {
+            from_dropdown.setSelection(savedInstanceState.getInt("from", 0));
+            to_dropdown.setSelection(savedInstanceState.getInt("to", 0));
+            interval_dropdown.setSelection(savedInstanceState.getInt("interval", 0));
+            sound_dropdown.setSelection(savedInstanceState.getInt("sound", 0));
+            vibration_dropdown.setSelection(savedInstanceState.getInt("vibration", 0));
+            // do this for each of your text views
+        }
+    }
 
     /**
      * An enumerator to specify the button that was clicked
@@ -55,6 +77,9 @@ public class Tab03 extends PageFragment {
         setView(rootView);
         return rootView;
     }
+
+
+
 
     /**
      * Sets the current view and initializes buttons
@@ -162,19 +187,92 @@ public class Tab03 extends PageFragment {
         if(settings_frame != null) {
             LinearLayout notifications_frame = (LinearLayout)settings_frame.getChildAt(1);
 
-            Spinner from_dropdown = (Spinner)notifications_frame.findViewById(R.id.from_spinner);
+            from_dropdown = (Spinner)notifications_frame.findViewById(R.id.from_spinner);
             String[] from_items = new String[]{"06:00","07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
-            ArrayAdapter<String> from_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, from_items);
+            final ArrayAdapter<String> from_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, from_items);
             from_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             from_dropdown.setAdapter(from_adapter);
+            from_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
 
-            Spinner to_dropdown = (Spinner)notifications_frame.findViewById(R.id.to_spinner);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+                String sel_item = from_adapter.getItem(i);
+                int num_from_interval;
+
+                if(sel_item == null)
+                    return;
+
+                switch(sel_item) {
+                    case "06:00":
+                        num_from_interval = 6*60*60*1000;
+
+                        break;
+                    case "07:00":
+                        num_from_interval = 7*60*60*1000;
+                        break;
+                    case "08:00":
+                        num_from_interval = 8*60*60*1000;
+                        break;
+                    case "09:00":
+                        num_from_interval = 9*60*60*1000;
+                        break;
+                    case "10:00":
+                        num_from_interval = 10*60*60*1000;
+                    case "11:00":
+                        num_from_interval = 11*60*60*1000;
+                    case "12:00":
+                        num_from_interval = 12*60*60*1000;
+                    case "13:00":
+                        num_from_interval = 13*60*60*1000;
+                    case "14:00":
+                        num_from_interval = 14*60*60*1000;
+                    case "15:00":
+                        num_from_interval = 15*60*60*1000;
+                    case "16:00":
+                        num_from_interval = 16*60*60*1000;
+                    case "17:00":
+                        num_from_interval = 17*60*60*1000;
+                    case "18:00":
+                        num_from_interval = 18*60*60*1000;
+                    case "19:00":
+                        num_from_interval = 19*60*60*1000;
+                    case "20:00":
+                        num_from_interval = 20*60*60*1000;
+                    case "21:00":
+                        num_from_interval = 21*60*60*1000;
+                    case "22:00":
+                        num_from_interval = 22*60*60*1000;
+                    case "23:00":
+                        num_from_interval = 23*60*60*1000;
+
+                    default:
+                        num_from_interval = 24*60*60*1000;
+                        break;
+
+                }
+                Log.i("Tab03", "from interval is " + num_from_interval);
+                Intent intent = new Intent(MainService.ACTION_UPDATE_FROM_INT);
+                intent.putExtra(MainService.INTENT_FROM_INT, num_from_interval);
+                getContext().sendBroadcast(intent);
+
+            }
+
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+
+            });
+
+
+            to_dropdown = (Spinner)notifications_frame.findViewById(R.id.to_spinner);
             String[] to_items = new String[]{"07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
             ArrayAdapter<String> to_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, to_items);
             to_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             to_dropdown.setAdapter(to_adapter);
 
-            Spinner interval_dropdown = (Spinner) notifications_frame.findViewById(R.id.interval_spinner);
+            interval_dropdown = (Spinner) notifications_frame.findViewById(R.id.interval_spinner);
             //String[] interval_items = new String[]{"5 min","10 min","20 min","30 min","1 hour","1.5 hour","2 hour","2.5 hour"};
             String[] interval_items = new String[]{"15 sec","25 sec","35 sec","45 sec", "1 min"};
             final ArrayAdapter<String> interval_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, interval_items);
@@ -183,6 +281,8 @@ public class Tab03 extends PageFragment {
             interval_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                     String sel_item = interval_adapter.getItem(i);
                     int num_seconds_interval;
 
@@ -219,13 +319,13 @@ public class Tab03 extends PageFragment {
                 }
             });
 
-            Spinner sound_dropdown = (Spinner) notifications_frame.findViewById(R.id.sound_spinner);
+            sound_dropdown = (Spinner) notifications_frame.findViewById(R.id.sound_spinner);
             String[] sound_items = new String[]{"Old Phone","Bell"};
             ArrayAdapter<String> sound_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, sound_items);
             sound_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             sound_dropdown.setAdapter(sound_adapter);
 
-            Spinner vibration_dropdown = (Spinner) notifications_frame.findViewById(R.id.vibration_spinner);
+            vibration_dropdown = (Spinner) notifications_frame.findViewById(R.id.vibration_spinner);
             String[] vibration_items = new String[]{"ON","OFF"};
             ArrayAdapter<String> vibration_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, vibration_items);
             vibration_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -260,6 +360,28 @@ public class Tab03 extends PageFragment {
         transaction.replace(R.id.page03, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+
+
+        super.onSaveInstanceState(outState);
+        outState.putInt("fron",from_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("to",to_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("interval",interval_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("sound",sound_dropdown
+                .getSelectedItemPosition());
+        outState.putInt("vibration",vibration_dropdown
+                .getSelectedItemPosition());
+        // do this for each or your Spinner
+        // You might consider using Bundle.putStringArray() instead
     }
 
 }

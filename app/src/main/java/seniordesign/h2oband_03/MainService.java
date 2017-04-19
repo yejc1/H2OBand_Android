@@ -30,12 +30,15 @@ public class MainService extends Service {
     public static final String ACTION_UPDATE_NOTIFICATION_INT = "update_not_int";
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
+    public static final String ACTION_UPDATE_FROM_INT = "update_from_int";
+
 
     // Intent Extra labels
     public static final String INTENT_DRAIN_VELOCITY = "d_vel";
     public static final String INTENT_PERCENT_FULL = "per_full";
     public static final String INTENT_NOTIF_INT = "not_int";
     public static final String INTENT_GOAL_30_SEC = "goal30sec";
+    public static final String INTENT_FROM_INT = "from_int";
 
 
     /* **************** Bottle Info **************** */
@@ -56,6 +59,9 @@ public class MainService extends Service {
         private long mLastCheckpoint;               // The time of the last checkpoint
         private long mLastUpdate;
 
+        //Notification from time
+        private long mFromSeconds;
+
         public H2OBand_Info() {
             /* Initial bottle settings */
             mDrainVelocity = 0;
@@ -68,6 +74,9 @@ public class MainService extends Service {
             mNotificationIntervalSeconds = 15;
             mLastCheckpoint = System.currentTimeMillis();
             mLastUpdate = System.currentTimeMillis();
+
+            //Notification from time
+            mFromSeconds= 100000000;
         }
 
         /**
@@ -112,11 +121,17 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean notificationTimeIntervalAchieved() {
+            // if current time is late than the from time
+            if(System.currentTimeMillis() > getFromSeconds())
+            {
+                 // Log.i("MainService", "Notification Invertal Second = " + mNotificationIntervalSeconds);
+                Log.i("MainService", "Currentime is = " + System.currentTimeMillis());
+                Log.i("MainService", "from time is = " + getFromSeconds());
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
                 return true;
-            }
+            }}
             return false;
         }
 
@@ -149,6 +164,8 @@ public class MainService extends Service {
             mPercentFullLastCheckpoint = percentFullLastCheckpoint;
         }
 
+        void setFromSeconds(long FromSeconds) {mFromSeconds = FromSeconds;}
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -172,6 +189,8 @@ public class MainService extends Service {
         int getPercentFullLastCheckpoint() {
             return mPercentFullLastCheckpoint;
         }
+
+        long getFromSeconds() {return mFromSeconds;}
     }
     H2OBand_Info info;
 
@@ -213,16 +232,26 @@ public class MainService extends Service {
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(ACTION_UPDATE_NOTIFICATION_INT)) {
                 info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
-            } else if(intent.getAction().equals(ACTION_REQUEST_INFO)) {
+
+            }
+
+            if(intent.getAction().equals(ACTION_UPDATE_FROM_INT)) {
+                info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
+
+            }else if(intent.getAction().equals(ACTION_REQUEST_INFO)) {
                 Intent response = new Intent(ACTION_INFO_UPDATE);
                 response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
                 response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
                 response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
                 response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
+                response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
+
                 sendBroadcast(intent);
             }
         }
     };
+
+
 
 
 
@@ -241,8 +270,12 @@ public class MainService extends Service {
         tester = new TestUpdate();
 
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
+        IntentFilter intentFilter2 = new IntentFilter(ACTION_UPDATE_FROM_INT);
         intentFilter.addAction(ACTION_INFO_UPDATE);
         registerReceiver(broadcastReceiver, intentFilter);
+        registerReceiver(broadcastReceiver, intentFilter2);
+
+
     }
 
     @Override
