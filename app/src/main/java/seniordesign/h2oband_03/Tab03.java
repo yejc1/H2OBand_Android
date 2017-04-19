@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +19,18 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class Tab03 extends PageFragment {
 
+    // Notification settings
     int notification_int_selection = 0;
+
+    // Account info settings
+    int age = 21;
+    int weight = 110;
+    int gender_selection = 0;
+    int unit_selection = 0;
 
     /**
      * An enumerator to specify the button that was clicked
@@ -136,21 +146,98 @@ public class Tab03 extends PageFragment {
      * frame
      */
     private void setInitializationSetup() {
+        Log.d("Tab03", "Setting initialization page");
+
         FrameLayout settings_frame = (FrameLayout)getView();
         if(settings_frame != null) {
             LinearLayout notifications_frame = (LinearLayout)settings_frame.getChildAt(1);
+
+            TextView age_edit = (TextView)settings_frame.findViewById(R.id.age_edit);
+            age_edit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    try {
+                        age = Integer.parseInt(charSequence.toString());
+                    } catch(NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+            Log.d("Tab03", "Setting age: " + age);
+            //age_edit.setText("" + age);
+            age_edit.setText(new StringBuilder("" + age));
+
+
+            TextView weight_edit = (TextView)settings_frame.findViewById(R.id.weight_edit);
+            weight_edit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    try {
+                        weight = Integer.parseInt(charSequence.toString());
+                    } catch(NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+            Log.d("Tab03", "Setting weight: " + weight);
+            //weight_edit.setText("" + weight);
+            weight_edit.setText(new StringBuilder("" + weight));
 
             Spinner gender_dropdown = (Spinner) notifications_frame.findViewById(R.id.gender_spinner);
             String[] gender_items = new String[]{"Female", "Male"};
             ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, gender_items);
             gender_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             gender_dropdown.setAdapter(gender_adapter);
+            gender_dropdown.setSelection(gender_selection);
+            gender_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    gender_selection = i;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
             Spinner unit_dropdown = (Spinner) notifications_frame.findViewById(R.id.unit_spinner);
             String[] unit_items = new String[]{"Metric", "American"};
             ArrayAdapter<String> unit_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, unit_items);
             unit_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             unit_dropdown.setAdapter(unit_adapter);
+            unit_dropdown.setSelection(unit_selection);
+            unit_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    unit_selection = i;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
         }
     }
 
