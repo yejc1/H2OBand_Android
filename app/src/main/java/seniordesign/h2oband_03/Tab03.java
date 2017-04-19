@@ -20,6 +20,8 @@ import android.widget.Spinner;
 
 public class Tab03 extends PageFragment {
 
+    int notification_int_selection = 0;
+
     /**
      * An enumerator to specify the button that was clicked
      */
@@ -180,9 +182,11 @@ public class Tab03 extends PageFragment {
             final ArrayAdapter<String> interval_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, interval_items);
             interval_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             interval_dropdown.setAdapter(interval_adapter);
+            interval_dropdown.setSelection(notification_int_selection);
             interval_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    notification_int_selection = i;
                     String sel_item = interval_adapter.getItem(i);
                     int num_seconds_interval;
 
@@ -232,35 +236,5 @@ public class Tab03 extends PageFragment {
             vibration_dropdown.setAdapter(vibration_adapter);
         }
     }
-
-
-
-
-
-
-
-    //@Override
-    public void onClick(View view) {
-        Fragment fragment = null;
-        switch (view.getId()) {
-            case R.id.device_pairing:
-                fragment = new Tab05();
-                replaceFragment(fragment);
-                break;
-
-            case R.id.goal:
-                fragment = new Tab02();
-                replaceFragment(fragment);
-                break;
-        }
-    }
-
-    public void replaceFragment(Fragment someFragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.page03, someFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
 }
 
