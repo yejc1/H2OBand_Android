@@ -167,17 +167,23 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(SurfaceHolder sh) {
-        if(bottleThread != null)
+        Log.v("BottleSurfaceView", "Surface being created");
+
+        if(
+                bottleThread != null &&
+                (!bottleThread.isAlive() || bottleThread.isInterrupted())
+                )
             bottleThread.start();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder sh, int width, int height, int format) {
-
+        Log.v("BottleSurfaceView", "Surface being changed");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder sh) {
+        Log.v("BottleSurfaceView", "Surface being destroyed");
         if(bottleThread != null && !bottleThread.isInterrupted())
             bottleThread.interrupt();
     }

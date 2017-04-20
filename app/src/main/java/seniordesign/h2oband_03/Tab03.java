@@ -22,6 +22,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Tab03 extends PageFragment {
+    private static final String SAVED_NOT_INT = "not_int";
+    private static final String SAVED_AGE = "age";
+    private static final String SAVED_WEIGHT = "weight";
+    private static final String SAVED_GENDER = "gender";
+    private static final String SAVED_UNIT = "unit";
 
     // Notification settings
     int notification_int_selection = 0;
@@ -61,8 +66,27 @@ public class Tab03 extends PageFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d("Tab03", "Saving instance");
+        outState.putInt(SAVED_NOT_INT, notification_int_selection);
+        outState.putInt(SAVED_AGE, age);
+        outState.putInt(SAVED_WEIGHT, weight);
+        outState.putInt(SAVED_GENDER, gender_selection);
+        outState.putInt(SAVED_UNIT, unit_selection);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            Log.d("Tab03", "Restoring previous instance");
+            notification_int_selection = savedInstanceState.getInt(SAVED_NOT_INT);
+            age = savedInstanceState.getInt(SAVED_AGE);
+            weight = savedInstanceState.getInt(SAVED_WEIGHT);
+            gender_selection = savedInstanceState.getInt(SAVED_GENDER);
+            unit_selection = savedInstanceState.getInt(SAVED_UNIT);
+        }
+
         View rootView = inflater.inflate(R.layout.settings, container, false);
         setView(rootView);
         return rootView;
