@@ -17,7 +17,7 @@ public class Tab05 extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.page05, container, false);
+        View rootView = inflater.inflate(R.layout.settings_pairing, container, false);
 
         Spinner dropdown = (Spinner) rootView.findViewById(R.id.bluetooth_spinner);
         String[] items = new String[]{"ON","OFF"};

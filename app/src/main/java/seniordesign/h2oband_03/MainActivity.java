@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
-import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,14 +19,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // App settings
+        // App layout_settings
         /* ********************************************************************************** */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -106,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Service settings
+        // Service layout_settings
         /* ********************************************************************************** */
 
         /* monitorThread = new MonitorThread();
@@ -166,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void fillPageList() {
-            pages.add(new Tab01());
-            pages.add(new Tab02());
-            pages.add(new Tab03());
+            pages.add(new HomeFragment());
+            pages.add(new ReportFragment());
+            pages.add(new SettingFragment());
         }
 
         @Override

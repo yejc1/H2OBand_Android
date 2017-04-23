@@ -67,7 +67,7 @@ public class MainService extends Service {
         private long mFromSeconds;
 
         public H2OBand_Info() {
-            /* Initial bottle settings */
+            /* Initial bottle layout_settings */
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
             mGoal30Sec = 5;
@@ -332,7 +332,7 @@ public class MainService extends Service {
 
 
     private class H2OBandUpdateThread extends Thread implements Runnable {
-        /* **************** Server settings **************** */
+        /* **************** Server layout_settings **************** */
         private final int PORT = 8080;
         private final int BACKLOG = 5;
         private final int TIMEOUT = 100;
@@ -343,7 +343,7 @@ public class MainService extends Service {
          * Configures the server socket and initializes the initial bottle properties
          */
         H2OBandUpdateThread() {
-            /* Configure server settings */
+            /* Configure server layout_settings */
             try {
                 mServerSocket = new ServerSocket(PORT, BACKLOG);
                 mServerSocket.setSoTimeout(TIMEOUT);

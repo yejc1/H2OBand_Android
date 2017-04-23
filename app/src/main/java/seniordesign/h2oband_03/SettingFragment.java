@@ -5,9 +5,7 @@ package seniordesign.h2oband_03;
  */
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,17 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class Tab03 extends PageFragment {
+public class SettingFragment extends PageFragment {
     private static final String SAVED_NOT_INT = "not_int";
     private static final String SAVED_AGE = "age";
     private static final String SAVED_WEIGHT = "weight";
     private static final String SAVED_GENDER = "gender";
     private static final String SAVED_UNIT = "unit";
 
-    // Notification settings
+    // Notification layout_settings
     int notification_int_selection = 0;
 
-    // Account info settings
+    // Account info layout_settings
     int age = 21;
     int weight = 110;
     int gender_selection = 0;
@@ -42,7 +40,7 @@ public class Tab03 extends PageFragment {
      */
     private enum PageSelection {
         DEVICE_PAIRING,
-        INITIALIZATION_SETUP,
+        ACCOUNT_INFO,
         NOTIFICATION
     };
 
@@ -51,9 +49,9 @@ public class Tab03 extends PageFragment {
         FrameLayout settings_frame = (FrameLayout)getView();
 
         // Indicates that the root view, the FrameLayout (named settings_frame), only
-        // has one child, which would be the Tab03
+        // has one child, which would be the SettingFragment
         //
-        // if the settings_frame has more than one child, it indicates that Tab03 is not
+        // if the settings_frame has more than one child, it indicates that SettingFragment is not
         // the view in focus, but that a button has been clicked and another window is
         // overlapping
         if(settings_frame == null || settings_frame.getChildCount() == 1)
@@ -67,7 +65,7 @@ public class Tab03 extends PageFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d("Tab03", "Saving instance");
+        Log.d("SettingFragment", "Saving instance");
         outState.putInt(SAVED_NOT_INT, notification_int_selection);
         outState.putInt(SAVED_AGE, age);
         outState.putInt(SAVED_WEIGHT, weight);
@@ -79,7 +77,7 @@ public class Tab03 extends PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if(savedInstanceState != null) {
-            Log.d("Tab03", "Restoring previous instance");
+            Log.d("SettingFragment", "Restoring previous instance");
             notification_int_selection = savedInstanceState.getInt(SAVED_NOT_INT);
             age = savedInstanceState.getInt(SAVED_AGE);
             weight = savedInstanceState.getInt(SAVED_WEIGHT);
@@ -87,7 +85,7 @@ public class Tab03 extends PageFragment {
             unit_selection = savedInstanceState.getInt(SAVED_UNIT);
         }
 
-        View rootView = inflater.inflate(R.layout.settings, container, false);
+        View rootView = inflater.inflate(R.layout.layout_settings, container, false);
         setView(rootView);
         return rootView;
     }
@@ -109,7 +107,7 @@ public class Tab03 extends PageFragment {
         view.findViewById(R.id.account_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchPage(PageSelection.INITIALIZATION_SETUP);
+                switchPage(PageSelection.ACCOUNT_INFO);
             }
         });
         view.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
@@ -132,15 +130,15 @@ public class Tab03 extends PageFragment {
         sub_frame.setVisibility(View.GONE);
         switch(selection) {
             case DEVICE_PAIRING:
-                LayoutInflater.from(getContext()).inflate(R.layout.page05, settings_frame);
+                LayoutInflater.from(getContext()).inflate(R.layout.settings_pairing, settings_frame);
                 setDevicePairingPage();
                 break;
-            case INITIALIZATION_SETUP:
-                LayoutInflater.from(getContext()).inflate(R.layout.page06, settings_frame);
+            case ACCOUNT_INFO:
+                LayoutInflater.from(getContext()).inflate(R.layout.settings_info, settings_frame);
                 setInitializationSetup();
                 break;
             case NOTIFICATION:
-                LayoutInflater.from(getContext()).inflate(R.layout.page04, settings_frame);
+                LayoutInflater.from(getContext()).inflate(R.layout.settings_notif, settings_frame);
                 setNotificationPage();
                 break;
             default:
@@ -150,7 +148,7 @@ public class Tab03 extends PageFragment {
 
     /**
      * Sets the device pairing page
-     * Assumes that the device pairing page has already been brought to focus in the settings
+     * Assumes that the device pairing page has already been brought to focus in the layout_settings
      * frame
      */
     private void setDevicePairingPage() {
@@ -168,11 +166,11 @@ public class Tab03 extends PageFragment {
 
     /**
      * Sets the intialization setup page
-     * Assumes that the intialization setup page has already been brought to focus in the settings
+     * Assumes that the intialization setup page has already been brought to focus in the layout_settings
      * frame
      */
     private void setInitializationSetup() {
-        Log.d("Tab03", "Setting initialization page");
+        Log.d("SettingFragment", "Setting initialization page");
 
         FrameLayout settings_frame = (FrameLayout)getView();
         if(settings_frame != null) {
@@ -199,7 +197,7 @@ public class Tab03 extends PageFragment {
 
                 }
             });
-            Log.d("Tab03", "Setting age: " + age);
+            Log.d("SettingFragment", "Setting age: " + age);
             age_edit.setText(new StringBuilder("" + age));
 
 
@@ -224,7 +222,7 @@ public class Tab03 extends PageFragment {
                     updateGoal();
                 }
             });
-            Log.d("Tab03", "Setting weight: " + weight);
+            Log.d("SettingFragment", "Setting weight: " + weight);
             weight_edit.setText(new StringBuilder("" + weight));
 
             Spinner gender_dropdown = (Spinner) notifications_frame.findViewById(R.id.gender_spinner);
@@ -267,7 +265,7 @@ public class Tab03 extends PageFragment {
 
     /**
      * Sets the notifications page
-     * Assumes that the notifications page has already been brought to focus in the settings
+     * Assumes that the notifications page has already been brought to focus in the layout_settings
      * frame
      */
     private void setNotificationPage() {
@@ -350,7 +348,7 @@ public class Tab03 extends PageFragment {
 
     private void updateGoal() {
         int new_goal = weight * 2 / 3;
-        Log.d("Tab03", "new_goal = " + new_goal);
+        Log.d("SettingFragment", "new_goal = " + new_goal);
 
         Intent intent = new Intent(MainService.ACTION_UPDATE_GOAL);
         intent.putExtra(MainService.INTENT_GOAL_OZ, new_goal);
