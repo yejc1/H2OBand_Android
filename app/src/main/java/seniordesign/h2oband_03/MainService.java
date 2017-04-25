@@ -188,7 +188,7 @@ public class MainService extends Service {
 
         public void update() {
             if((System.currentTimeMillis() - mLastUpdate) / 1000 >= INTERVAL) {
-                int rand_d_vel = Math.abs(random.nextInt() % 5);
+                int rand_d_vel = Math.abs(random.nextInt() % 3);
 
                 Log.i("TestUpdate", "Sending new drain velocity: " + rand_d_vel);
                 Intent intent = new Intent(ACTION_UPDATE_DRAIN_VELOCITY);
@@ -211,15 +211,20 @@ public class MainService extends Service {
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_UPDATE_NOTIFICATION_INT)) {
-                info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
-            } else if(intent.getAction().equals(ACTION_REQUEST_INFO)) {
-                Intent response = new Intent(ACTION_INFO_UPDATE);
-                response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
-                response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
-                response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
-                response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
-                sendBroadcast(intent);
+            switch(intent.getAction()) {
+                case ACTION_UPDATE_NOTIFICATION_INT:
+                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
+                    break;
+                case ACTION_REQUEST_INFO:
+                    Log.d("MainService", "Sending values");
+
+                    Intent response = new Intent(ACTION_INFO_UPDATE);
+                    response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
+                    response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
+                    response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
+                    response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
+                    sendBroadcast(intent);
+                    break;
             }
         }
     };
@@ -241,7 +246,7 @@ public class MainService extends Service {
         tester = new TestUpdate();
 
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
-        intentFilter.addAction(ACTION_INFO_UPDATE);
+        intentFilter.addAction(ACTION_REQUEST_INFO);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 

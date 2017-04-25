@@ -9,6 +9,10 @@ import android.support.v4.app.Fragment;
 
 public class PageFragment extends Fragment {
 
+    /**
+     * Handles the message sent from the MainActivity from the BroadcastReceiver
+     * @param msg    The message to handle
+     */
     public void handleMessage(Message msg) {}
 
     /**
