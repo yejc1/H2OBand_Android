@@ -19,7 +19,7 @@ public class Tab06 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.page06, container, false);
+        View rootView = inflater.inflate(R.layout.settings_info, container, false);
 /*
         Spinner dropdown = (Spinner) rootView.findViewById(R.id.age_spinner);
         String[] items = new String[]{"15", "16", "17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"};

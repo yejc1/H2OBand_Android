@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
-import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,23 +19,12 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     static final int MSG_D_VEL = 0;
     static final int INFO_UPDATE = 1;
 
-
-
-    MonitorThread monitorThread = null;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -47,17 +34,18 @@ public class MainActivity extends AppCompatActivity {
             switch(intent.getAction()) {
                 case MainService.ACTION_UPDATE_DRAIN_VELOCITY:
                     Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
-
                     msg.what = MSG_D_VEL;
                     break;
                 case MainService.ACTION_INFO_UPDATE:
-                    Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
+                    /* Log.d("MainActivity", "d_vel = " + intent.getExtras().getInt(MainService.INTENT_DRAIN_VELOCITY));
                     Log.d("MainActivity", "goal = " + intent.getExtras().getInt(MainService.INTENT_GOAL_30_SEC));
                     Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
                     Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
-
+                    Log.d("MainActivity", "goal OZ = " + intent.getExtras().getInt(MainService.INTENT_GOAL_OZ)); */
                     msg.what = INFO_UPDATE;
+                    break;
             }
+
             msg.setData(intent.getExtras());
             ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
         }
@@ -78,16 +66,19 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // App settings
+        // App layout_settings
         /* ********************************************************************************** */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -105,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Service settings
+        // Service layout_settings
         /* ********************************************************************************** */
 
         /* monitorThread = new MonitorThread();
-        monitorThread.start();
+        monitorThread.start(); */
         WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show(); */
+        Toast.makeText(getApplicationContext(), ip, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getApplicationContext(), MainService.class);
         startService(intent);
@@ -131,20 +122,6 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
         nBuilder.setAutoCancel(true);
     }
-
-    /* @Override
-    public void onResume() {
-        super.onResume();
-        if(monitorThread != null && !monitorThread.isAlive())
-            monitorThread.start();
-    } */
-
-    /* @Override
-    public void onStop() {
-        super.onStop();
-        if(monitorThread != null && monitorThread.isAlive() && !monitorThread.isInterrupted())
-            monitorThread.interrupt();
-    } */
 
     @Override
     public void onDestroy() {
@@ -179,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void fillPageList() {
-            pages.add(new Tab01());
-            pages.add(new Tab02());
-            pages.add(new Tab03());
+            pages.add(new HomeFragment());
+            pages.add(new ReportFragment());
+            pages.add(new SettingFragment());
         }
 
         @Override
@@ -189,26 +166,6 @@ public class MainActivity extends AppCompatActivity {
             if(position > pages.size())
                 return null;
             return pages.get(position);
-
-            /* switch (position) {
-                case 0:
-                    return new Tab01();
-                case 1:
-                    return new Tab02();
-                case 2:
-                    return new Tab03();
-                case 3:
-                    return new Tab04();
-                case 4:
-                    return new Tab05();
-                case 5:
-                    return new Tab06();
-                case 6:
-                    return new Tab07();
-
-                default:
-                    return null;
-            } */
         }
 
         @Override
@@ -236,76 +193,6 @@ public class MainActivity extends AppCompatActivity {
                     return "Init2";
                 default:
                     return "";
-            }
-        }
-    }
-
-    private class SendThread extends Thread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                String text = "halt";
-
-                Socket socket = new Socket("192.168.1.101", 80);
-                OutputStream output = socket.getOutputStream();
-                output.write(text.getBytes());
-
-                String response = "";
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                for(String current = input.readLine(); current != null; current = input.readLine())
-                    response += current;
-                Log.d("SendThread", response);
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class MonitorThread extends Thread implements Runnable {
-        private final int PORT = 8000;
-        private final int BACKLOG = 5;
-        private final int TIMEOUT = 100;
-
-        @Override
-        public void run() {
-            String response = "Received";
-            ServerSocket serverSocket;
-            Socket socket;
-
-            try {
-                serverSocket = new ServerSocket(PORT, BACKLOG);
-                serverSocket.setSoTimeout(TIMEOUT);
-            } catch(IOException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            while(!Thread.interrupted()) {
-                try {
-                    socket = serverSocket.accept();
-                    Log.d("MonitorThread", "Received connection");
-
-                    String result = "";
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    for(char c = (char)input.read(); c != 0; c = (char)input.read())
-                        result += c;
-                    Log.d("MonitorThread", result);
-
-                    OutputStream output = socket.getOutputStream();
-                    output.write(response.getBytes());
-
-                    socket.close();
-                } catch(SocketTimeoutException e) {
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-
-            try {
-                serverSocket.close();
-            } catch(IOException e) {
-                e.printStackTrace();
             }
         }
     }

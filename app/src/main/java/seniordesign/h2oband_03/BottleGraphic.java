@@ -17,7 +17,7 @@ import android.view.SurfaceHolder;
  * Created by saumil on 3/15/17.
  */
 
-public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+public class BottleGraphic extends SurfaceView implements SurfaceHolder.Callback {
     private class BottleThread extends Thread implements Runnable {
         final int INTERVAL = 100;
 
@@ -27,9 +27,9 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
         private final SurfaceHolder sh;
 
-        BottleThread(BottleSurfaceView bottleSurfaceView) {
-            if(bottleSurfaceView != null)
-                sh = bottleSurfaceView.getHolder();
+        BottleThread(BottleGraphic bottleGraphic) {
+            if(bottleGraphic != null)
+                sh = bottleGraphic.getHolder();
             else
                 sh = null;
 
@@ -84,10 +84,8 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
 
         void setPercentageComplete(int percentage) {
-            percentageComplete = percentage;
+            percentageComplete = 100 - percentage;
         }
-
-
 
         private void importBitmap() {
             empty_bottle = BitmapFactory.decodeResource(getContext().getResources(),
@@ -143,24 +141,24 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
     BottleThread bottleThread;
     Bottle bottle;
 
-    public BottleSurfaceView(Context context) {
+    public BottleGraphic(Context context) {
         super(context);
         initialize();
     }
 
-    public BottleSurfaceView(Context context, AttributeSet attrs) {
+    public BottleGraphic(Context context, AttributeSet attrs) {
         super(context,attrs);
         initialize();
     }
 
-    public BottleSurfaceView(Context context, AttributeSet attrs, int defStyle) {
+    public BottleGraphic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
     }
 
     private void initialize() {
         bottle = new Bottle();
-        bottleThread = new BottleThread(BottleSurfaceView.this);
+        bottleThread = new BottleThread(BottleGraphic.this);
         SurfaceHolder sh = getHolder();
         sh.addCallback(this);
         setFocusable(true);
@@ -168,17 +166,23 @@ public class BottleSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(SurfaceHolder sh) {
-        if(bottleThread != null)
+        Log.v("BottleSurfaceView", "Surface being created");
+
+        if(
+                bottleThread != null &&
+                (!bottleThread.isAlive() || bottleThread.isInterrupted())
+                )
             bottleThread.start();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder sh, int width, int height, int format) {
-
+        Log.v("BottleSurfaceView", "Surface being changed");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder sh) {
+        Log.v("BottleSurfaceView", "Surface being destroyed");
         if(bottleThread != null && !bottleThread.isInterrupted())
             bottleThread.interrupt();
     }

@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.Random;
 
 /**
@@ -28,14 +27,19 @@ public class MainService extends Service {
     // Intent actions
     public static final String ACTION_UPDATE_DRAIN_VELOCITY = "update_d_vel";
     public static final String ACTION_UPDATE_NOTIFICATION_INT = "update_not_int";
+    public static final String ACTION_UPDATE_GOAL = "update_goal";
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
+    public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
+
 
     // Intent Extra labels
     public static final String INTENT_DRAIN_VELOCITY = "d_vel";
     public static final String INTENT_PERCENT_FULL = "per_full";
     public static final String INTENT_NOTIF_INT = "not_int";
     public static final String INTENT_GOAL_30_SEC = "goal30sec";
+    public static final String INTENT_GOAL_OZ = "goal_oz";
+    public static final String INTENT_FROM_INT = "from_int";
 
 
     /* **************** Bottle Info **************** */
@@ -49,6 +53,9 @@ public class MainService extends Service {
         private int mPercentFull;                   // The maximum amount of water in bottle
         private int mGoal30Sec;                     // Amount of water to drink within 30 seconds
 
+        private int mGoalOZ;                        // The goal in ounces based on a person's weight
+                                                    // This value is currently only used for display
+
         private int mPercentFullLastCheckpoint;     // The percentage full at the last checkpoint
 
         // TIMING
@@ -56,11 +63,16 @@ public class MainService extends Service {
         private long mLastCheckpoint;               // The time of the last checkpoint
         private long mLastUpdate;
 
+        //Notification from time
+        private long mFromSeconds;
+
         public H2OBand_Info() {
-            /* Initial bottle settings */
+            /* Initial bottle layout_settings */
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
             mGoal30Sec = 5;
+
+            mGoalOZ = 73;
 
             mPercentFullLastCheckpoint = BOTTLE_MAX;
 
@@ -68,6 +80,9 @@ public class MainService extends Service {
             mNotificationIntervalSeconds = 15;
             mLastCheckpoint = System.currentTimeMillis();
             mLastUpdate = System.currentTimeMillis();
+
+            //Notification from time
+            mFromSeconds= 100000000;
         }
 
         /**
@@ -100,6 +115,9 @@ public class MainService extends Service {
             Log.i("MainService", "Percent full at last checkpoint = " + mPercentFullLastCheckpoint);
 
             int goal = mNotificationIntervalSeconds * mGoal30Sec / 30;
+
+            Log.i("MainService", "Goal = " + goal);
+
             achieved = mPercentFullLastCheckpoint - mPercentFull >= goal;
             mPercentFullLastCheckpoint = mPercentFull;
 
@@ -112,11 +130,17 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean notificationTimeIntervalAchieved() {
+            // if current time is late than the from time
+            if(System.currentTimeMillis() > getFromSeconds())
+            {
+                /* //Log.i("H2OBand_Info", "Notification Invertal Second = " + mNotificationIntervalSeconds);
+                Log.i("H2OBand_Info", "Currentime is = " + System.currentTimeMillis());
+                Log.i("H2OBand_Info", "from time is = " + getFromSeconds()); */
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
                 return true;
-            }
+            }}
             return false;
         }
 
@@ -141,6 +165,10 @@ public class MainService extends Service {
             mGoal30Sec = goal;
         }
 
+        void setGoalOZ(int goalOZ) {
+            mGoalOZ = goalOZ;
+        }
+
         void setLastCheckpoint(long checkpoint) {
             mLastCheckpoint = checkpoint;
         }
@@ -148,6 +176,8 @@ public class MainService extends Service {
         void setPercentFullLastCheckpoint(int percentFullLastCheckpoint) {
             mPercentFullLastCheckpoint = percentFullLastCheckpoint;
         }
+
+        void setFromSeconds(long FromSeconds) {mFromSeconds = FromSeconds;}
 
         int getDrainVelocity() {
             return mDrainVelocity;
@@ -165,6 +195,10 @@ public class MainService extends Service {
             return mGoal30Sec;
         }
 
+        int getGoalOZ() {
+            return mGoalOZ;
+        }
+
         long getLastCheckpoint() {
             return mLastCheckpoint;
         }
@@ -172,6 +206,8 @@ public class MainService extends Service {
         int getPercentFullLastCheckpoint() {
             return mPercentFullLastCheckpoint;
         }
+
+        long getFromSeconds() {return mFromSeconds;}
     }
     H2OBand_Info info;
 
@@ -215,19 +251,28 @@ public class MainService extends Service {
                 case ACTION_UPDATE_NOTIFICATION_INT:
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
                     break;
+                case ACTION_UPDATE_FROM_TIME:
+                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
+                    break;
+                case ACTION_UPDATE_GOAL:
+                    Log.d("MainService", "Updating goal");
+                    info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
+                    break;
                 case ACTION_REQUEST_INFO:
-                    Log.d("MainService", "Sending values");
-
                     Intent response = new Intent(ACTION_INFO_UPDATE);
                     response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
                     response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
                     response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
                     response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
-                    sendBroadcast(intent);
+                    response.putExtra(INTENT_GOAL_OZ, info.getGoalOZ());
+                    response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
+                    sendBroadcast(response);
                     break;
             }
         }
     };
+
+
 
 
 
@@ -247,6 +292,8 @@ public class MainService extends Service {
 
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
         intentFilter.addAction(ACTION_REQUEST_INFO);
+        intentFilter.addAction(ACTION_UPDATE_FROM_TIME);
+        intentFilter.addAction(ACTION_UPDATE_GOAL);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -285,7 +332,7 @@ public class MainService extends Service {
 
 
     private class H2OBandUpdateThread extends Thread implements Runnable {
-        /* **************** Server settings **************** */
+        /* **************** Server layout_settings **************** */
         private final int PORT = 8080;
         private final int BACKLOG = 5;
         private final int TIMEOUT = 100;
@@ -296,7 +343,7 @@ public class MainService extends Service {
          * Configures the server socket and initializes the initial bottle properties
          */
         H2OBandUpdateThread() {
-            /* Configure server settings */
+            /* Configure server layout_settings */
             try {
                 mServerSocket = new ServerSocket(PORT, BACKLOG);
                 mServerSocket.setSoTimeout(TIMEOUT);
