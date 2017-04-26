@@ -22,7 +22,7 @@ public class ReportFragment extends PageFragment {
                 Log.d("ReportFragment", "Goal in ounces = " + msg.getData().getInt(MainService.INTENT_GOAL_OZ));
                 TextView textView23 = (TextView) getView().findViewById(R.id.textView23);
                 textView23
-                        .setText(new StringBuilder("" + msg.getData().getInt(MainService.INTENT_GOAL_OZ)));
+                        .setText(new StringBuilder(msg.getData().getInt(MainService.INTENT_GOAL_OZ) + " oz"));
             }
     }
 

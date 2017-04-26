@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView23"
-                    android:text="73mL"
+                    android:text="73 oz"
                     android:textSize="30sp"
                     android:textAlignment="center"/>
 

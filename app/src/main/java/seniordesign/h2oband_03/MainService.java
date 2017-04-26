@@ -70,7 +70,12 @@ public class MainService extends Service {
         private long mFromSeconds;
         private long mToSeconds;
 
-        public H2OBand_Info() {
+
+
+
+
+
+        H2OBand_Info() {
             /* Initial bottle layout_settings */
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
@@ -85,7 +90,7 @@ public class MainService extends Service {
             mLastCheckpoint = System.currentTimeMillis();
             mLastUpdate = System.currentTimeMillis();
 
-            //Notification from time
+            //Notification timing
             mFromSeconds= 100000000;
             mToSeconds= 2000000000;
         }
@@ -147,6 +152,17 @@ public class MainService extends Service {
                 return true;
             }}
             return false;
+        }
+
+        /**
+         * Determines whether the current time is within the boundaries of the start time and
+         * end time
+         * @return  True if enough time is between the start and end times
+         *          False otherwise
+         */
+        boolean withinNotifInterval() {
+            return System.currentTimeMillis() > mFromSeconds &&
+                    System.currentTimeMillis() < mToSeconds;
         }
 
 
@@ -261,10 +277,14 @@ public class MainService extends Service {
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_NOTIF_INT));
                     break;
                 case ACTION_UPDATE_FROM_TIME:
-                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
+                    Log.d("MainService", "BroadcastReceiver received: " +
+                            intent.getExtras().getInt(INTENT_FROM_INT));
+                    info.setFromSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
                     break;
                 case ACTION_UPDATE_TO_TIME:
-                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_TO_INT));
+                    Log.d("MainService", "BroadcastReceiver received: " +
+                            intent.getExtras().getInt(INTENT_TO_INT));
+                    info.setToSeconds(intent.getExtras().getInt(INTENT_TO_INT));
                     break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
@@ -449,7 +469,7 @@ public class MainService extends Service {
          * requirement
          */
         private void checkNotification() {
-            if(info.notificationTimeIntervalAchieved()) {
+            if(info.withinNotifInterval() && info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
                     Log.v("MainService", "Goal is not achieved");
                     sendNotification();
