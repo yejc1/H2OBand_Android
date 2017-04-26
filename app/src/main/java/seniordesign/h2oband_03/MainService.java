@@ -278,13 +278,13 @@ public class MainService extends Service {
                     break;
                 case ACTION_UPDATE_FROM_TIME:
                     Log.d("MainService", "BroadcastReceiver received: " +
-                            intent.getExtras().getInt(INTENT_FROM_INT));
-                    info.setFromSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
+                            intent.getExtras().getLong(INTENT_FROM_INT));
+                    info.setFromSeconds(intent.getExtras().getLong(INTENT_FROM_INT));
                     break;
                 case ACTION_UPDATE_TO_TIME:
                     Log.d("MainService", "BroadcastReceiver received: " +
-                            intent.getExtras().getInt(INTENT_TO_INT));
-                    info.setToSeconds(intent.getExtras().getInt(INTENT_TO_INT));
+                            intent.getExtras().getLong(INTENT_TO_INT));
+                    info.setToSeconds(intent.getExtras().getLong(INTENT_TO_INT));
                     break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
@@ -469,6 +469,11 @@ public class MainService extends Service {
          * requirement
          */
         private void checkNotification() {
+            if(info.withinNotifInterval())
+                Log.d("H2OBandUpdateThread", "Within interval");
+            else
+                Log.d("H2OBandUpdateThread", "Outside interval");
+
             if(info.withinNotifInterval() && info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
                     Log.v("MainService", "Goal is not achieved");
