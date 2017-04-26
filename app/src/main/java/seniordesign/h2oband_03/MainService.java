@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -31,6 +32,7 @@ public class MainService extends Service {
     public static final String ACTION_REQUEST_INFO = "req_info";
     public static final String ACTION_INFO_UPDATE = "info_update";
     public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
+    public static final String ACTION_UPDATE_TO_TIME = "update_to_time";
 
 
     // Intent Extra labels
@@ -40,6 +42,7 @@ public class MainService extends Service {
     public static final String INTENT_GOAL_30_SEC = "goal30sec";
     public static final String INTENT_GOAL_OZ = "goal_oz";
     public static final String INTENT_FROM_INT = "from_int";
+    public static final String INTENT_TO_INT = "to_int";
 
 
     /* **************** Bottle Info **************** */
@@ -65,6 +68,7 @@ public class MainService extends Service {
 
         //Notification from time
         private long mFromSeconds;
+        private long mToSeconds;
 
         public H2OBand_Info() {
             /* Initial bottle layout_settings */
@@ -83,6 +87,7 @@ public class MainService extends Service {
 
             //Notification from time
             mFromSeconds= 100000000;
+            mToSeconds= 2000000000;
         }
 
         /**
@@ -179,6 +184,8 @@ public class MainService extends Service {
 
         void setFromSeconds(long FromSeconds) {mFromSeconds = FromSeconds;}
 
+        void setToSeconds(long ToSeconds) {mToSeconds= ToSeconds;}
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -208,6 +215,8 @@ public class MainService extends Service {
         }
 
         long getFromSeconds() {return mFromSeconds;}
+
+        long getToSeconds() {return mToSeconds;}
     }
     H2OBand_Info info;
 
@@ -254,6 +263,9 @@ public class MainService extends Service {
                 case ACTION_UPDATE_FROM_TIME:
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
                     break;
+                case ACTION_UPDATE_TO_TIME:
+                    info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_TO_INT));
+                    break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
@@ -266,6 +278,7 @@ public class MainService extends Service {
                     response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
                     response.putExtra(INTENT_GOAL_OZ, info.getGoalOZ());
                     response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
+                    response.putExtra(INTENT_TO_INT, info.getToSeconds());
                     sendBroadcast(response);
                     break;
             }
@@ -293,6 +306,7 @@ public class MainService extends Service {
         IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_NOTIFICATION_INT);
         intentFilter.addAction(ACTION_REQUEST_INFO);
         intentFilter.addAction(ACTION_UPDATE_FROM_TIME);
+        intentFilter.addAction(ACTION_UPDATE_TO_TIME);
         intentFilter.addAction(ACTION_UPDATE_GOAL);
         registerReceiver(broadcastReceiver, intentFilter);
     }
@@ -455,6 +469,11 @@ public class MainService extends Service {
             nBuilder.setWhen(System.currentTimeMillis());
             nBuilder.setContentTitle("H2OBand");
             nBuilder.setContentText("You need to drink more water");
+            nBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            nBuilder.setAutoCancel(true);
+            nBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            nBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent =

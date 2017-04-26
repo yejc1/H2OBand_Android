@@ -25,9 +25,14 @@ public class SettingFragment extends PageFragment {
     private static final String SAVED_WEIGHT = "weight";
     private static final String SAVED_GENDER = "gender";
     private static final String SAVED_UNIT = "unit";
+    private static final String SAVED_FROM_INT= "from_int";
+    private static final String SAVED_TO_INT= "to_int";
 
     // Notification layout_settings
     int notification_int_selection = 0;
+
+    int from_int_selection= 0;
+    int to_int_selection= 0;
 
     // Account info layout_settings
     int age = 21;
@@ -67,6 +72,8 @@ public class SettingFragment extends PageFragment {
     public void onSaveInstanceState(Bundle outState) {
         Log.d("SettingFragment", "Saving instance");
         outState.putInt(SAVED_NOT_INT, notification_int_selection);
+        outState.putInt(SAVED_FROM_INT,from_int_selection);
+        outState.putInt(SAVED_TO_INT,to_int_selection);
         outState.putInt(SAVED_AGE, age);
         outState.putInt(SAVED_WEIGHT, weight);
         outState.putInt(SAVED_GENDER, gender_selection);
@@ -78,6 +85,7 @@ public class SettingFragment extends PageFragment {
                              Bundle savedInstanceState) {
         if(savedInstanceState != null) {
             Log.d("SettingFragment", "Restoring previous instance");
+            from_int_selection= savedInstanceState.getInt(SAVED_FROM_INT);
             notification_int_selection = savedInstanceState.getInt(SAVED_NOT_INT);
             age = savedInstanceState.getInt(SAVED_AGE);
             weight = savedInstanceState.getInt(SAVED_WEIGHT);
@@ -275,15 +283,171 @@ public class SettingFragment extends PageFragment {
 
             Spinner from_dropdown = (Spinner)notifications_frame.findViewById(R.id.from_spinner);
             String[] from_items = new String[]{"06:00","07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
-            ArrayAdapter<String> from_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, from_items);
+            final ArrayAdapter<String> from_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, from_items);
             from_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             from_dropdown.setAdapter(from_adapter);
+            from_dropdown.setSelection(from_int_selection);
+            from_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    from_int_selection = i;
+                    String sel_item=from_adapter.getItem(i);
+                    long num_from_interval;
+
+                    if(sel_item == null)
+                        return;
+
+
+                    switch(sel_item) {
+                        case "06:00":
+                            num_from_interval = 6*60*60*1000;
+                            break;
+                        case "07:00":
+                            num_from_interval = 7*60*60*1000;
+                            break;
+                        case "08:00":
+                            num_from_interval = 8*60*60*1000;
+                            break;
+                        case "09:00":
+                            num_from_interval = 9*60*60*1000;
+                            break;
+                        case "10:00":
+                            num_from_interval = 10*60*60*1000;
+                            break;
+                        case "11:00":
+                            num_from_interval = 11*60*60*1000;
+                            break;
+                        case "12:00":
+                            num_from_interval = 12*60*60*1000;
+                            break;
+                        case "13:00":
+                            num_from_interval = 13*60*60*1000;
+                            break;
+                        case "14:00":
+                            num_from_interval = 14*60*60*1000;
+                            break;
+                        case "15:00":
+                            num_from_interval = 15*60*60*1000;
+                            break;
+                        case "16:00":
+                            num_from_interval = 16*60*60*1000;
+                            break;
+                        case "17:00":
+                            num_from_interval = 17*60*60*1000;
+                            break;
+                        case "18:00":
+                            num_from_interval = 18*60*60*1000;
+                            break;
+                        case "19:00":
+                            num_from_interval = 19*60*60*1000;
+                            break;
+                        case "20:00":
+                            num_from_interval = 20*60*60*1000;
+                            break;
+                        case "21:00":
+                            num_from_interval = 21*60*60*1000;
+                            break;
+                        default:
+                            num_from_interval = 22*60*60*1000;
+                            break;
+                    }
+
+                    Intent intent = new Intent(MainService.ACTION_UPDATE_FROM_TIME);
+                    intent.putExtra(MainService.INTENT_FROM_INT, num_from_interval);
+                    getContext().sendBroadcast(intent);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
             Spinner to_dropdown = (Spinner)notifications_frame.findViewById(R.id.to_spinner);
             String[] to_items = new String[]{"07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
-            ArrayAdapter<String> to_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, to_items);
+            final ArrayAdapter<String> to_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, to_items);
             to_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             to_dropdown.setAdapter(to_adapter);
+            to_dropdown.setSelection(to_int_selection);
+            to_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    to_int_selection = i;
+                    String sel_item= to_adapter.getItem(i);
+                    long num_from_interval;
+
+                    if(sel_item == null)
+                        return;
+
+
+                    switch(sel_item) {
+
+                        case "07:00":
+                            num_from_interval = 7*60*60*1000;
+                            break;
+                        case "08:00":
+                            num_from_interval = 8*60*60*1000;
+                            break;
+                        case "09:00":
+                            num_from_interval = 9*60*60*1000;
+                            break;
+                        case "10:00":
+                            num_from_interval = 10*60*60*1000;
+                            break;
+                        case "11:00":
+                            num_from_interval = 11*60*60*1000;
+                            break;
+                        case "12:00":
+                            num_from_interval = 12*60*60*1000;
+                            break;
+                        case "13:00":
+                            num_from_interval = 13*60*60*1000;
+                            break;
+                        case "14:00":
+                            num_from_interval = 14*60*60*1000;
+                            break;
+                        case "15:00":
+                            num_from_interval = 15*60*60*1000;
+                            break;
+                        case "16:00":
+                            num_from_interval = 16*60*60*1000;
+                            break;
+                        case "17:00":
+                            num_from_interval = 17*60*60*1000;
+                            break;
+                        case "18:00":
+                            num_from_interval = 18*60*60*1000;
+                            break;
+                        case "19:00":
+                            num_from_interval = 19*60*60*1000;
+                            break;
+                        case "20:00":
+                            num_from_interval = 20*60*60*1000;
+                            break;
+                        case "21:00":
+                            num_from_interval = 21*60*60*1000;
+                            break;
+                        case "22:00":
+                            num_from_interval = 22*60*60*1000;
+                            break;
+                        case "23:00":
+                            num_from_interval = 23*60*60*1000;
+                            break;
+                        default:
+                            num_from_interval = 24*60*60*1000;
+                            break;
+                    }
+
+                    Intent intent = new Intent(MainService.ACTION_UPDATE_TO_TIME);
+                    intent.putExtra(MainService.INTENT_TO_INT, num_from_interval);
+                    getContext().sendBroadcast(intent);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
             Spinner interval_dropdown = (Spinner) notifications_frame.findViewById(R.id.interval_spinner);
             //String[] interval_items = new String[]{"5 min","10 min","20 min","30 min","1 hour","1.5 hour","2 hour","2.5 hour"};

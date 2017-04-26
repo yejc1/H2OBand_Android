@@ -26,9 +26,10 @@ public class HomeFragment extends PageFragment {
         if(getView() != null) {
             BottleGraphic bottleGraphic =
                     (BottleGraphic) ((ViewGroup) getView()).getChildAt(0);
-            bottleGraphic.changeBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
-            if(msg.what == MainActivity.INFO_UPDATE)
-                bottleGraphic.setBottlePercentage(msg.getData().getInt(MainService.INTENT_PERCENT_FULL));
+            bottleGraphic.setBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
+
+            if(msg.what == MainActivity.INFO_UPDATE){}
+                bottleGraphic.setBottleDVel(msg.getData().getInt(MainService.INTENT_PERCENT_FULL));
         }
 
         /* switch(msg.what) {
