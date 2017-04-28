@@ -482,10 +482,10 @@ public class MainService extends Service {
          * requirement
          */
         private void checkNotification() {
-            if(info.withinNotifInterval())
+            /* if(info.withinNotifInterval())
                 Log.d("H2OBandUpdateThread", "Within interval");
             else
-                Log.d("H2OBandUpdateThread", "Outside interval");
+                Log.d("H2OBandUpdateThread", "Outside interval"); */
 
             if(info.withinNotifInterval() && info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
