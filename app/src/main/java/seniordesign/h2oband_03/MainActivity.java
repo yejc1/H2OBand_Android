@@ -8,6 +8,9 @@ import android.net.wifi.WifiManager;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // App layout_settings
         /* ********************************************************************************** */
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.content_main);
         setContentView(R.layout.activity_main);
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -121,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
         /* ********************************************************************************** */
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
         nBuilder.setAutoCancel(true);
+
+
+        setDrawer();
     }
 
     @Override
@@ -131,13 +139,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         int position = mViewPager.getCurrentItem();
-        if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
-                .onBackPressed())
-            super.onBackPressed();
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
+                .onBackPressed()) {
+                super.onBackPressed();
+        }
     }
 
 
+    private void setDrawer() {
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
 
 
 
