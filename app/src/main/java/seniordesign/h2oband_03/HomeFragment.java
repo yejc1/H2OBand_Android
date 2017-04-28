@@ -28,8 +28,8 @@ public class HomeFragment extends PageFragment {
                     (BottleGraphic) ((ViewGroup) getView()).getChildAt(0);
             bottleGraphic.setBottleDVel(msg.getData().getInt(MainService.INTENT_DRAIN_VELOCITY));
 
-            if(msg.what == MainActivity.INFO_UPDATE){}
-                bottleGraphic.setBottleDVel(msg.getData().getInt(MainService.INTENT_PERCENT_FULL));
+            if(msg.what == MainActivity.INFO_UPDATE)
+                bottleGraphic.setPercentageComplete(msg.getData().getInt(MainService.INTENT_PERCENT_FULL));
         }
 
         /* switch(msg.what) {

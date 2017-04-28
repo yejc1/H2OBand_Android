@@ -99,7 +99,7 @@ public class BottleGraphic extends SurfaceView implements SurfaceHolder.Callback
 
 
         void restart() {
-            percentageComplete = 0;
+            percentageComplete = 100;
         }
 
 
