@@ -33,6 +33,7 @@ public class MainService extends Service {
     public static final String ACTION_INFO_UPDATE = "info_update";
     public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
     public static final String ACTION_UPDATE_TO_TIME = "update_to_time";
+    public static final String ACTION_UPDATE_ACTIVITY="update_activity";
 
 
     // Intent Extra labels
@@ -43,6 +44,7 @@ public class MainService extends Service {
     public static final String INTENT_GOAL_OZ = "goal_oz";
     public static final String INTENT_FROM_INT = "from_int";
     public static final String INTENT_TO_INT = "to_int";
+    public static final String INTENT_ACTIVITY="activity";
 
 
     /* **************** Bottle Info **************** */
@@ -70,6 +72,9 @@ public class MainService extends Service {
         private long mFromSeconds;
         private long mToSeconds;
 
+        //Activity Level
+        private String activityLevel;
+
         public H2OBand_Info() {
             /* Initial bottle layout_settings */
             mDrainVelocity = 0;
@@ -88,6 +93,8 @@ public class MainService extends Service {
             //Notification from time
             mFromSeconds= 100000000;
             mToSeconds= 2000000000;
+
+            activityLevel = "Light";
         }
 
         /**
@@ -182,6 +189,8 @@ public class MainService extends Service {
             mPercentFullLastCheckpoint = percentFullLastCheckpoint;
         }
 
+        void setActivityLevel(String activity){activityLevel = activity;}
+
         void setFromSeconds(long FromSeconds) {mFromSeconds = FromSeconds;}
 
         void setToSeconds(long ToSeconds) {mToSeconds= ToSeconds;}
@@ -217,6 +226,8 @@ public class MainService extends Service {
         long getFromSeconds() {return mFromSeconds;}
 
         long getToSeconds() {return mToSeconds;}
+
+        String getActivityLevel(){return activityLevel;}
     }
     H2OBand_Info info;
 
@@ -266,6 +277,11 @@ public class MainService extends Service {
                 case ACTION_UPDATE_TO_TIME:
                     info.setNotificationIntervalSeconds(intent.getExtras().getInt(INTENT_TO_INT));
                     break;
+                case ACTION_UPDATE_ACTIVITY:
+                    Log.d("MainService", "Setting activity level");
+                    Log.d("MainService", "Level: " + intent.getExtras().getString(INTENT_ACTIVITY));
+                    info.setActivityLevel(intent.getExtras().getString(INTENT_ACTIVITY));
+                    break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
@@ -279,6 +295,7 @@ public class MainService extends Service {
                     response.putExtra(INTENT_GOAL_OZ, info.getGoalOZ());
                     response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
                     response.putExtra(INTENT_TO_INT, info.getToSeconds());
+                    response.putExtra(INTENT_ACTIVITY, info.getActivityLevel());
                     sendBroadcast(response);
                     break;
             }
@@ -308,6 +325,7 @@ public class MainService extends Service {
         intentFilter.addAction(ACTION_UPDATE_FROM_TIME);
         intentFilter.addAction(ACTION_UPDATE_TO_TIME);
         intentFilter.addAction(ACTION_UPDATE_GOAL);
+        intentFilter.addAction(ACTION_UPDATE_ACTIVITY);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 

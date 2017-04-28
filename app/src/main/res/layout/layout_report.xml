@@ -48,8 +48,49 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/textView40"
+                    android:text="Weight * 2/3 * Activity"
+                    android:textSize="30sp"
+                    android:textAlignment="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="120 lb"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2/3"
+                        android:textSize="25sp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/textView111"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Light"
+                        android:textSize="25sp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/textView23"
-                    android:text="73mL"
+                    android:text="79oz"
                     android:textSize="30sp"
                     android:textAlignment="center"/>
 

@@ -135,6 +135,34 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="#00000000" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView601"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#edf0f4"
+                    android:text="Activity"
+                    android:textSize="30sp" />
+
+                <Spinner
+                    android:id="@+id/activity_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#edf0f4"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
         </LinearLayout>
 
 

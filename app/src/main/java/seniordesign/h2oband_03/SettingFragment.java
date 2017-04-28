@@ -27,6 +27,7 @@ public class SettingFragment extends PageFragment {
     private static final String SAVED_UNIT = "unit";
     private static final String SAVED_FROM_INT= "from_int";
     private static final String SAVED_TO_INT= "to_int";
+    private static final String SAVED_ACTIVITY="activity";
 
     // Notification layout_settings
     int notification_int_selection = 0;
@@ -37,8 +38,11 @@ public class SettingFragment extends PageFragment {
     // Account info layout_settings
     int age = 21;
     int weight = 110;
+    int activity_selection=0;
     int gender_selection = 0;
     int unit_selection = 0;
+
+    String activity="";
 
     /**
      * An enumerator to specify the button that was clicked
@@ -78,6 +82,7 @@ public class SettingFragment extends PageFragment {
         outState.putInt(SAVED_WEIGHT, weight);
         outState.putInt(SAVED_GENDER, gender_selection);
         outState.putInt(SAVED_UNIT, unit_selection);
+        outState.putString(SAVED_ACTIVITY,activity);
     }
 
     @Override
@@ -91,6 +96,7 @@ public class SettingFragment extends PageFragment {
             weight = savedInstanceState.getInt(SAVED_WEIGHT);
             gender_selection = savedInstanceState.getInt(SAVED_GENDER);
             unit_selection = savedInstanceState.getInt(SAVED_UNIT);
+            activity=savedInstanceState.getString(SAVED_ACTIVITY);
         }
 
         View rootView = inflater.inflate(R.layout.layout_settings, container, false);
@@ -143,7 +149,7 @@ public class SettingFragment extends PageFragment {
                 break;
             case ACCOUNT_INFO:
                 LayoutInflater.from(getContext()).inflate(R.layout.settings_info, settings_frame);
-                setInitializationSetup();
+                setAccountInfoPage();
                 break;
             case NOTIFICATION:
                 LayoutInflater.from(getContext()).inflate(R.layout.settings_notif, settings_frame);
@@ -177,7 +183,7 @@ public class SettingFragment extends PageFragment {
      * Assumes that the intialization setup page has already been brought to focus in the layout_settings
      * frame
      */
-    private void setInitializationSetup() {
+    private void setAccountInfoPage() {
         Log.d("SettingFragment", "Setting initialization page");
 
         FrameLayout settings_frame = (FrameLayout)getView();
@@ -243,6 +249,47 @@ public class SettingFragment extends PageFragment {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     gender_selection = i;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            Spinner activity_dropdown = (Spinner) notifications_frame.findViewById(R.id.activity_spinner);
+            String[] activity_items = new String[]{"Light", "Medium", "Heavy"};
+            final ArrayAdapter<String> activity_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, activity_items);
+            activity_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            activity_dropdown.setAdapter(activity_adapter);
+            activity_dropdown.setSelection(activity_selection);
+            activity_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    activity_selection = i;
+                    activity = activity_adapter.getItem(i);
+                    /* String sel_item = activity_adapter.getItem(i);
+
+                    if(sel_item == null)
+                        return;
+
+                    switch(sel_item) {
+                        case "Light":
+                            activity = "Light";
+                            break;
+                        case "Medium":
+                            activity = "Medium";
+                            break;
+                        default:
+                            activity = "Heavy";
+                            break;
+                    } */
+
+                    Intent intent = new Intent(MainService.ACTION_UPDATE_ACTIVITY);
+                    intent.putExtra(MainService.INTENT_ACTIVITY, activity);
+                    getContext().sendBroadcast(intent);
+
+                    updateGoal();
                 }
 
                 @Override
@@ -512,6 +559,18 @@ public class SettingFragment extends PageFragment {
 
     private void updateGoal() {
         int new_goal = weight * 2 / 3;
+        switch(activity) {
+            case "Light":
+                new_goal += 6;
+                break;
+            case "Medium":
+                new_goal += 8;
+                break;
+            default:
+                new_goal += 10;
+                break;
+
+        }
         Log.d("SettingFragment", "new_goal = " + new_goal);
 
         Intent intent = new Intent(MainService.ACTION_UPDATE_GOAL);
