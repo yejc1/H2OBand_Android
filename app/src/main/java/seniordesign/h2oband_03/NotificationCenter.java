@@ -1,7 +1,6 @@
 package seniordesign.h2oband_03;
 
 
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import android.app.NotificationManager;
@@ -22,7 +21,7 @@ public class NotificationCenter extends ActionBarActivity{
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView (R.layout.activity_main);
+        setContentView (R.layout.content_main);
 
         notification = new NotificationCompat.Builder(this);
         notification.setAutoCancel(true);

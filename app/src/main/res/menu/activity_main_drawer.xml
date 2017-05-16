@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_acct_info"
+        android:icon="@drawable/notif"
+        android:title="Account Info" />
+    <item
+        android:id="@+id/menu_goal"
+        android:icon="@drawable/notif"
+        android:title="Goal" />
+    <item
+        android:id="@+id/menu_notification"
+        android:icon="@drawable/notif"
+        android:title="Notification" />
+</menu>

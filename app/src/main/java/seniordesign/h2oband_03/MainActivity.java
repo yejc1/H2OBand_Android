@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Message;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -15,13 +19,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
     static final int MSG_D_VEL = 0;
     static final int INFO_UPDATE = 1;
 
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // App layout_settings
         /* ********************************************************************************** */
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.content_main);
         setContentView(R.layout.activity_main);
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -121,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         /* ********************************************************************************** */
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
         nBuilder.setAutoCancel(true);
+
+
+        setToolbar();
+        setDrawer();
     }
 
     @Override
@@ -131,13 +144,56 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         int position = mViewPager.getCurrentItem();
-        if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
-                .onBackPressed())
-            super.onBackPressed();
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
+                .onBackPressed()) {
+                super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.menu_acct_info:
+                Log.d("MainActivity", "Account info selected");
+                break;
+            case R.id.menu_goal:
+                Log.d("MainActivity", "Goal selected");
+                break;
+            case R.id.menu_notification:
+                Log.d("MainActivity", "Notification selected");
+                break;
+            default:
+                return false;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("H2OZone");
+    }
+
+    private void setDrawer() {
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ((NavigationView)findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
 
 
 
