@@ -23,7 +23,7 @@ public class ReportFragment extends PageFragment {
                 TextView textView23 = (TextView) getView().findViewById(R.id.textView23);
                 textView23
                         .setText(new StringBuilder(msg.getData().getInt(MainService.INTENT_GOAL_OZ) + " oz"));
-
+/*
                 Log.d("ReportFragment", "Acvitiy level = " + msg.getData().getString(MainService.INTENT_ACTIVITY));
                 TextView textView111 = (TextView) getView().findViewById(R.id.textView111);
                 textView111
@@ -32,6 +32,7 @@ public class ReportFragment extends PageFragment {
                 Log.d("ReportFragment", "Weight = " + msg.getData().getInt(MainService.INTENT_WEIGHT));
                 TextView textView9 = (TextView)getView().findViewById(R.id.textView9);
                 textView9.setText(new StringBuilder(msg.getData().getInt(MainService.INTENT_WEIGHT) + " lb"));
+                */
             }
     }
 

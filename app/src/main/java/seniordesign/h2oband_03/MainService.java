@@ -81,6 +81,8 @@ public class MainService extends Service {
         //Activity Level
         private String activityLevel;
 
+        private boolean mEnabled;
+
         H2OBand_Info() {
             /* Initial bottle layout_settings */
             mDrainVelocity = 0;
@@ -101,6 +103,8 @@ public class MainService extends Service {
             //Notification timing
             mFromSeconds= 6;
             mToSeconds= 7;
+
+            mEnabled=false;
 
             activityLevel = "Light";
         }
@@ -151,7 +155,7 @@ public class MainService extends Service {
          */
         boolean notificationTimeIntervalAchieved() {
             // if current time is late than the from time
-
+            Log.i("H2OBand_Info", "withinnotificationinterval = " + withinNotifInterval());
             if(withinNotifInterval())
             {
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
@@ -169,14 +173,16 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean withinNotifInterval() {
-            Calendar currentTime    = Calendar.getInstance();
-            int hours = currentTime.get(Calendar.HOUR_OF_DAY) ;
-            /*Log.i("H2OBand_Info", "Currentime is = " + hours);
-            Log.i("H2OBand_Info", "from time is = " + mFromSeconds);
-            Log.i("H2OBand_Info", "from time is = " + mToSeconds);*/
 
-            return hours > mFromSeconds &&
-                    hours < mToSeconds;
+                Calendar currentTime = Calendar.getInstance();
+                int hours = currentTime.get(Calendar.HOUR_OF_DAY);
+            Log.i("H2OBand_Info", "Currentime is = " + hours);
+            Log.i("H2OBand_Info", "from time is = " + mFromSeconds);
+            Log.i("H2OBand_Info", "from time is = " + mToSeconds);
+
+                return hours > mFromSeconds &&
+                        hours < mToSeconds;
+
         }
 
 
@@ -222,6 +228,10 @@ public class MainService extends Service {
             mWeight = weight;
         }
 
+        void setEnabled(boolean enabled){
+            mEnabled= enabled;
+        }
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -256,6 +266,10 @@ public class MainService extends Service {
 
         int getWeight() {
             return mWeight;
+        }
+
+        boolean getEnabled(){
+            return mEnabled;
         }
 
         String getActivityLevel(){return activityLevel;}
@@ -317,6 +331,9 @@ public class MainService extends Service {
                     Log.d("MainService", "Level: " + intent.getExtras().getString(INTENT_ACTIVITY));
                     info.setActivityLevel(intent.getExtras().getString(INTENT_ACTIVITY));
                     break;
+                case ACTION_UPDATE_NOTI:
+                    info.setEnabled(intent.getExtras().getBoolean(INTENT_NOTIF_EN));
+                    break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
@@ -349,6 +366,7 @@ public class MainService extends Service {
             response.putExtra(INTENT_TO_INT, info.getToSeconds());
             response.putExtra(INTENT_ACTIVITY, info.getActivityLevel());
             response.putExtra(INTENT_WEIGHT, info.getWeight());
+            response.putExtra(INTENT_NOTIF_EN,info.getEnabled());
             sendBroadcast(response);
         }
     };
@@ -377,6 +395,7 @@ public class MainService extends Service {
         intentFilter.addAction(ACTION_UPDATE_TO_TIME);
         intentFilter.addAction(ACTION_UPDATE_GOAL);
         intentFilter.addAction(ACTION_UPDATE_ACTIVITY);
+        intentFilter.addAction(ACTION_UPDATE_NOTI);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -523,7 +542,7 @@ public class MainService extends Service {
             else
                 Log.d("H2OBandUpdateThread", "Outside interval"); */
 
-            if(info.notificationTimeIntervalAchieved()) {
+            if(info.mEnabled && info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
                     Log.v("MainService", "Goal is not achieved");
                     sendNotification();

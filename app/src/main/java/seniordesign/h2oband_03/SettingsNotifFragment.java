@@ -23,6 +23,7 @@ public class SettingsNotifFragment extends PageFragment {
 
     int from_int_selection= 0;
     int to_int_selection= 0;
+    int enabled_int_selection=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +42,43 @@ public class SettingsNotifFragment extends PageFragment {
      */
     private void setNotificationPage(View view) {
         LinearLayout notifications_frame = (LinearLayout)view;
+
+        Spinner enabled_dropdown = (Spinner)notifications_frame.findViewById(R.id.enabled_dropdown);
+        String[] enabled_items = new String[]{ "NO","YES"};
+        final ArrayAdapter<String> enabled_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, enabled_items);
+        enabled_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        enabled_dropdown.setAdapter(enabled_adapter);
+        enabled_dropdown.setSelection(enabled_int_selection);
+        enabled_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                enabled_int_selection = i;
+                String sel_item=enabled_adapter.getItem(i);
+                //int enabled_button;
+                boolean enabled_button;
+
+                if(sel_item == null)
+                    return;
+
+                switch(sel_item) {
+                    case "YES":
+                        enabled_button = true;
+                        break;
+                    default:
+                        enabled_button = false;
+                        break;
+                }
+
+                Intent intent = new Intent(MainService.ACTION_UPDATE_NOTI);
+                intent.putExtra(MainService.INTENT_NOTIF_EN, enabled_button);
+                getContext().sendBroadcast(intent);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         Spinner from_dropdown = (Spinner)notifications_frame.findViewById(R.id.from_spinner);
         String[] from_items = new String[]{"06:00","07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
