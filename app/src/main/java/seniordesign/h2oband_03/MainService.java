@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Random;
 
 /**
@@ -69,8 +71,8 @@ public class MainService extends Service {
         private long mLastUpdate;
 
         //Notification from time
-        private long mFromSeconds;
-        private long mToSeconds;
+        private int mFromSeconds;
+        private int mToSeconds;
 
         //Activity Level
         private String activityLevel;
@@ -91,8 +93,8 @@ public class MainService extends Service {
             mLastUpdate = System.currentTimeMillis();
 
             //Notification timing
-            mFromSeconds= 100000000;
-            mToSeconds= 2000000000;
+            mFromSeconds= 6;
+            mToSeconds= 24;
 
             activityLevel = "Light";
         }
@@ -143,11 +145,9 @@ public class MainService extends Service {
          */
         boolean notificationTimeIntervalAchieved() {
             // if current time is late than the from time
-            if(System.currentTimeMillis() > getFromSeconds())
+
+            if(withinNotifInterval())
             {
-                /* //Log.i("H2OBand_Info", "Notification Invertal Second = " + mNotificationIntervalSeconds);
-                Log.i("H2OBand_Info", "Currentime is = " + System.currentTimeMillis());
-                Log.i("H2OBand_Info", "from time is = " + getFromSeconds()); */
             if((System.currentTimeMillis() - mLastCheckpoint) / 1000 >=
                     mNotificationIntervalSeconds) {
                 mLastCheckpoint = System.currentTimeMillis();
@@ -163,8 +163,14 @@ public class MainService extends Service {
          *          False otherwise
          */
         boolean withinNotifInterval() {
-            return System.currentTimeMillis() > mFromSeconds &&
-                    System.currentTimeMillis() < mToSeconds;
+            Calendar currentTime    = Calendar.getInstance();
+            int hours = currentTime.get(Calendar.HOUR_OF_DAY) ;
+            Log.i("H2OBand_Info", "Currentime is = " + hours);
+            Log.i("H2OBand_Info", "from time is = " + mFromSeconds);
+            Log.i("H2OBand_Info", "from time is = " + mToSeconds);
+
+            return hours > mFromSeconds &&
+                    hours < mToSeconds;
         }
 
 
@@ -202,9 +208,9 @@ public class MainService extends Service {
 
         void setActivityLevel(String activity){activityLevel = activity;}
 
-        void setFromSeconds(long FromSeconds) {mFromSeconds = FromSeconds;}
+        void setFromSeconds(int FromSeconds) {mFromSeconds = FromSeconds;}
 
-        void setToSeconds(long ToSeconds) {mToSeconds= ToSeconds;}
+        void setToSeconds(int ToSeconds) {mToSeconds= ToSeconds;}
 
         int getDrainVelocity() {
             return mDrainVelocity;
@@ -234,9 +240,9 @@ public class MainService extends Service {
             return mPercentFullLastCheckpoint;
         }
 
-        long getFromSeconds() {return mFromSeconds;}
+        int getFromSeconds() {return mFromSeconds;}
 
-        long getToSeconds() {return mToSeconds;}
+        int getToSeconds() {return mToSeconds;}
 
         String getActivityLevel(){return activityLevel;}
     }
@@ -285,12 +291,12 @@ public class MainService extends Service {
                 case ACTION_UPDATE_FROM_TIME:
                     Log.d("MainService", "BroadcastReceiver received: " +
                             intent.getExtras().getLong(INTENT_FROM_INT));
-                    info.setFromSeconds(intent.getExtras().getLong(INTENT_FROM_INT));
+                    info.setFromSeconds(intent.getExtras().getInt(INTENT_FROM_INT));
                     break;
                 case ACTION_UPDATE_TO_TIME:
                     Log.d("MainService", "BroadcastReceiver received: " +
                             intent.getExtras().getLong(INTENT_TO_INT));
-                    info.setToSeconds(intent.getExtras().getLong(INTENT_TO_INT));
+                    info.setToSeconds(intent.getExtras().getInt(INTENT_TO_INT));
                     break;
                 case ACTION_UPDATE_ACTIVITY:
                     Log.d("MainService", "Setting activity level");

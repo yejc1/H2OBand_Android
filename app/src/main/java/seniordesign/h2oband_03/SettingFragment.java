@@ -339,7 +339,7 @@ public class SettingFragment extends PageFragment {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     from_int_selection = i;
                     String sel_item=from_adapter.getItem(i);
-                    long num_from_interval;
+                    int num_from_interval;
 
                     if(sel_item == null)
                         return;
@@ -347,55 +347,58 @@ public class SettingFragment extends PageFragment {
 
                     switch(sel_item) {
                         case "06:00":
-                            num_from_interval = 6*60*60*1000;
+                            num_from_interval = 6;
                             break;
                         case "07:00":
-                            num_from_interval = 7*60*60*1000;
+                            num_from_interval = 7;
                             break;
                         case "08:00":
-                            num_from_interval = 8*60*60*1000;
+                            num_from_interval = 8;
                             break;
                         case "09:00":
-                            num_from_interval = 9*60*60*1000;
+                            num_from_interval = 9;
                             break;
                         case "10:00":
-                            num_from_interval = 10*60*60*1000;
+                            num_from_interval = 10;
                             break;
                         case "11:00":
-                            num_from_interval = 11*60*60*1000;
+                            num_from_interval = 11;
                             break;
                         case "12:00":
-                            num_from_interval = 12*60*60*1000;
+                            num_from_interval = 12;
                             break;
                         case "13:00":
-                            num_from_interval = 13*60*60*1000;
+                            num_from_interval = 13;
                             break;
                         case "14:00":
-                            num_from_interval = 14*60*60*1000;
+                            num_from_interval = 14;
                             break;
                         case "15:00":
-                            num_from_interval = 15*60*60*1000;
+                            num_from_interval = 15;
                             break;
                         case "16:00":
-                            num_from_interval = 16*60*60*1000;
+                            num_from_interval = 16;
                             break;
                         case "17:00":
-                            num_from_interval = 17*60*60*1000;
+                            num_from_interval = 17;
                             break;
                         case "18:00":
-                            num_from_interval = 18*60*60*1000;
+                            num_from_interval = 18;
                             break;
                         case "19:00":
-                            num_from_interval = 19*60*60*1000;
+                            num_from_interval = 19;
                             break;
                         case "20:00":
-                            num_from_interval = 20*60*60*1000;
+                            num_from_interval = 20;
                             break;
                         case "21:00":
-                            num_from_interval = 21*60*60*1000;
+                            num_from_interval = 21;
+                            break;
+                        case "22:00":
+                            num_from_interval = 22;
                             break;
                         default:
-                            num_from_interval = 22*60*60*1000;
+                            num_from_interval = 23;
                             break;
                     }
 
@@ -421,7 +424,7 @@ public class SettingFragment extends PageFragment {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     to_int_selection = i;
                     String sel_item= to_adapter.getItem(i);
-                    long num_from_interval;
+                    int num_from_interval;
 
                     if(sel_item == null)
                         return;
@@ -430,58 +433,58 @@ public class SettingFragment extends PageFragment {
                     switch(sel_item) {
 
                         case "07:00":
-                            num_from_interval = 7*60*60*1000;
+                            num_from_interval = 7;
                             break;
                         case "08:00":
-                            num_from_interval = 8*60*60*1000;
+                            num_from_interval = 8;
                             break;
                         case "09:00":
-                            num_from_interval = 9*60*60*1000;
+                            num_from_interval = 9;
                             break;
                         case "10:00":
-                            num_from_interval = 10*60*60*1000;
+                            num_from_interval = 10;
                             break;
                         case "11:00":
-                            num_from_interval = 11*60*60*1000;
+                            num_from_interval = 11;
                             break;
                         case "12:00":
-                            num_from_interval = 12*60*60*1000;
+                            num_from_interval = 12;
                             break;
                         case "13:00":
-                            num_from_interval = 13*60*60*1000;
+                            num_from_interval = 13;
                             break;
                         case "14:00":
-                            num_from_interval = 14*60*60*1000;
+                            num_from_interval = 14;
                             break;
                         case "15:00":
-                            num_from_interval = 15*60*60*1000;
+                            num_from_interval = 15;
                             break;
                         case "16:00":
-                            num_from_interval = 16*60*60*1000;
+                            num_from_interval = 16;
                             break;
                         case "17:00":
-                            num_from_interval = 17*60*60*1000;
+                            num_from_interval = 17;
                             break;
                         case "18:00":
-                            num_from_interval = 18*60*60*1000;
+                            num_from_interval = 18;
                             break;
                         case "19:00":
-                            num_from_interval = 19*60*60*1000;
+                            num_from_interval = 19;
                             break;
                         case "20:00":
-                            num_from_interval = 20*60*60*1000;
+                            num_from_interval = 20;
                             break;
                         case "21:00":
-                            num_from_interval = 21*60*60*1000;
+                            num_from_interval = 21;
                             break;
                         case "22:00":
-                            num_from_interval = 22*60*60*1000;
+                            num_from_interval = 22;
                             break;
                         case "23:00":
-                            num_from_interval = 23*60*60*1000;
+                            num_from_interval = 23;
                             break;
                         default:
-                            num_from_interval = 24*60*60*1000;
+                            num_from_interval = 24;
                             break;
                     }
 
