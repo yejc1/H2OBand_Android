@@ -96,6 +96,22 @@ public class SettingsInfoFragment extends PageFragment {
         });
         Log.d("SettingInfoFragment", "Setting weight: " + weight);
         weight_edit.setText(new StringBuilder("" + weight));
+        weight_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Spinner gender_dropdown = (Spinner) view.findViewById(R.id.gender_spinner);
         String[] gender_items = new String[]{"Female", "Male"};

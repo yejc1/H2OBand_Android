@@ -28,6 +28,10 @@ public class ReportFragment extends PageFragment {
                 TextView textView111 = (TextView) getView().findViewById(R.id.textView111);
                 textView111
                         .setText(new StringBuilder("" + msg.getData().getString(MainService.INTENT_ACTIVITY)));
+
+                Log.d("ReportFragment", "Weight = " + msg.getData().getInt(MainService.INTENT_WEIGHT));
+                TextView textView9 = (TextView)getView().findViewById(R.id.textView9);
+                textView9.setText(new StringBuilder(msg.getData().getInt(MainService.INTENT_WEIGHT) + " lb"));
             }
     }
 

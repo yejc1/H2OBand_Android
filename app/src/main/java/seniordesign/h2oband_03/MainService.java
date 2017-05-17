@@ -35,8 +35,9 @@ public class MainService extends Service {
     public static final String ACTION_INFO_UPDATE = "info_update";
     public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
     public static final String ACTION_UPDATE_TO_TIME = "update_to_time";
-    public static final String ACTION_UPDATE_ACTIVITY="update_activity";
-    public static final String ACTION_UPDATE_NOTI="update_notif_en";
+    public static final String ACTION_UPDATE_WEIGHT = "update_weight";
+    public static final String ACTION_UPDATE_ACTIVITY = "update_activity";
+    public static final String ACTION_UPDATE_NOTI = "update_notif_en";
 
 
     // Intent Extra labels
@@ -47,7 +48,8 @@ public class MainService extends Service {
     public static final String INTENT_GOAL_OZ = "goal_oz";
     public static final String INTENT_FROM_INT = "from_int";
     public static final String INTENT_TO_INT = "to_int";
-    public static final String INTENT_ACTIVITY="activity";
+    public static final String INTENT_WEIGHT = "weight";
+    public static final String INTENT_ACTIVITY = "activity";
     public static final String INTENT_NOTIF_EN="notif_en";
 
 
@@ -56,7 +58,7 @@ public class MainService extends Service {
         private final int BOTTLE_MAX = 100;         // The maximum amount of water in bottle
         private final int BOTTLE_UPDATE_TIME = 100; // The amount of time to wait after updating bottle
 
-
+        private int mWeight;
 
         private int mDrainVelocity;                 // Drain velocity (per 100 milliseconds)
         private int mPercentFull;                   // The maximum amount of water in bottle
@@ -79,11 +81,13 @@ public class MainService extends Service {
         //Activity Level
         private String activityLevel;
 
-        public H2OBand_Info() {
+        H2OBand_Info() {
             /* Initial bottle layout_settings */
             mDrainVelocity = 0;
             mPercentFull = BOTTLE_MAX;
             mGoal30Sec = 5;
+
+            mWeight = 120;
 
             mGoalOZ = 79;
 
@@ -214,6 +218,10 @@ public class MainService extends Service {
 
         void setToSeconds(int ToSeconds) {mToSeconds= ToSeconds;}
 
+        void setWeight(int weight) {
+            mWeight = weight;
+        }
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -245,6 +253,10 @@ public class MainService extends Service {
         int getFromSeconds() {return mFromSeconds;}
 
         int getToSeconds() {return mToSeconds;}
+
+        int getWeight() {
+            return mWeight;
+        }
 
         String getActivityLevel(){return activityLevel;}
     }
@@ -309,6 +321,10 @@ public class MainService extends Service {
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
                     break;
+                case ACTION_UPDATE_WEIGHT:
+                    Log.d("MainService", "Updating weight");
+                    info.setWeight(intent.getExtras().getInt(INTENT_WEIGHT));
+                    break;
                 /* case ACTION_REQUEST_INFO:
                     Intent response = new Intent(ACTION_INFO_UPDATE);
                     response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
@@ -332,6 +348,7 @@ public class MainService extends Service {
             response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
             response.putExtra(INTENT_TO_INT, info.getToSeconds());
             response.putExtra(INTENT_ACTIVITY, info.getActivityLevel());
+            response.putExtra(INTENT_WEIGHT, info.getWeight());
             sendBroadcast(response);
         }
     };

@@ -53,7 +53,7 @@
                     android:textSize="30sp"
                     android:textAlignment="center"/>
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -82,7 +82,7 @@
                         android:text="Light"
                         android:textSize="25sp"
                         android:layout_weight="1"/>
-                </LinearLayout>
+                </LinearLayout>-->
 
 
 
