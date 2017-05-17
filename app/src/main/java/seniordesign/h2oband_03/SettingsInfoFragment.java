@@ -69,7 +69,7 @@ public class SettingsInfoFragment extends PageFragment {
 
             }
         });
-        Log.d("SettingFragment", "Setting age: " + age);
+        Log.d("SettingInfoFragment", "Setting age: " + age);
         age_edit.setText(new StringBuilder("" + age));
 
 
@@ -94,7 +94,7 @@ public class SettingsInfoFragment extends PageFragment {
                 updateGoal();
             }
         });
-        Log.d("SettingFragment", "Setting weight: " + weight);
+        Log.d("SettingInfoFragment", "Setting weight: " + weight);
         weight_edit.setText(new StringBuilder("" + weight));
 
         Spinner gender_dropdown = (Spinner) view.findViewById(R.id.gender_spinner);

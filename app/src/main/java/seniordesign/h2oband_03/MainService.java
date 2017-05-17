@@ -167,9 +167,9 @@ public class MainService extends Service {
         boolean withinNotifInterval() {
             Calendar currentTime    = Calendar.getInstance();
             int hours = currentTime.get(Calendar.HOUR_OF_DAY) ;
-            Log.i("H2OBand_Info", "Currentime is = " + hours);
+            /*Log.i("H2OBand_Info", "Currentime is = " + hours);
             Log.i("H2OBand_Info", "from time is = " + mFromSeconds);
-            Log.i("H2OBand_Info", "from time is = " + mToSeconds);
+            Log.i("H2OBand_Info", "from time is = " + mToSeconds);*/
 
             return hours > mFromSeconds &&
                     hours < mToSeconds;
@@ -309,7 +309,7 @@ public class MainService extends Service {
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
                     break;
-                case ACTION_REQUEST_INFO:
+                /* case ACTION_REQUEST_INFO:
                     Intent response = new Intent(ACTION_INFO_UPDATE);
                     response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
                     response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
@@ -320,8 +320,19 @@ public class MainService extends Service {
                     response.putExtra(INTENT_TO_INT, info.getToSeconds());
                     response.putExtra(INTENT_ACTIVITY, info.getActivityLevel());
                     sendBroadcast(response);
-                    break;
+                    break; */
             }
+
+            Intent response = new Intent(ACTION_INFO_UPDATE);
+            response.putExtra(INTENT_DRAIN_VELOCITY, info.getDrainVelocity());
+            response.putExtra(INTENT_PERCENT_FULL, info.getPercentFull());
+            response.putExtra(INTENT_NOTIF_INT, info.getNotificationIntervalSeconds());
+            response.putExtra(INTENT_GOAL_30_SEC, info.getGoal30Sec());
+            response.putExtra(INTENT_GOAL_OZ, info.getGoalOZ());
+            response.putExtra(INTENT_FROM_INT, info.getFromSeconds());
+            response.putExtra(INTENT_TO_INT, info.getToSeconds());
+            response.putExtra(INTENT_ACTIVITY, info.getActivityLevel());
+            sendBroadcast(response);
         }
     };
 

@@ -51,12 +51,13 @@ public class MainActivity extends AppCompatActivity
                     Log.d("MainActivity", "notif_int = " + intent.getExtras().getInt(MainService.INTENT_NOTIF_INT));
                     Log.d("MainActivity", "per_ful = " + intent.getExtras().getInt(MainService.INTENT_PERCENT_FULL));
                     Log.d("MainActivity", "goal OZ = " + intent.getExtras().getInt(MainService.INTENT_GOAL_OZ)); */
+                    Log.d("MainActivity", "Updating info");
                     msg.what = INFO_UPDATE;
                     break;
             }
 
             msg.setData(intent.getExtras());
-            ((PageFragment)mSectionsPagerAdapter.getItem(position)).handleMessage(msg);
+            ((PageFragment)mSectionsPagerAdapter.getItem(1)).handleMessage(msg);
         }
     };
 
