@@ -487,7 +487,7 @@ public class MainService extends Service {
             else
                 Log.d("H2OBandUpdateThread", "Outside interval"); */
 
-            if(info.withinNotifInterval() && info.notificationTimeIntervalAchieved()) {
+            if(info.notificationTimeIntervalAchieved()) {
                 if(!info.goalAchieved()) {
                     Log.v("MainService", "Goal is not achieved");
                     sendNotification();
