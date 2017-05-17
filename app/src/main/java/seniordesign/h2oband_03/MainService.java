@@ -36,6 +36,7 @@ public class MainService extends Service {
     public static final String ACTION_UPDATE_FROM_TIME = "update_from_time";
     public static final String ACTION_UPDATE_TO_TIME = "update_to_time";
     public static final String ACTION_UPDATE_ACTIVITY="update_activity";
+    public static final String ACTION_UPDATE_NOTI="update_notif_en";
 
 
     // Intent Extra labels
@@ -47,6 +48,7 @@ public class MainService extends Service {
     public static final String INTENT_FROM_INT = "from_int";
     public static final String INTENT_TO_INT = "to_int";
     public static final String INTENT_ACTIVITY="activity";
+    public static final String INTENT_NOTIF_EN="notif_en";
 
 
     /* **************** Bottle Info **************** */
