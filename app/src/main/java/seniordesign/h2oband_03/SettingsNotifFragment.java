@@ -24,6 +24,7 @@ public class SettingsNotifFragment extends PageFragment {
     int from_int_selection= 0;
     int to_int_selection= 0;
     int enabled_int_selection=0;
+    int vibration_int_selection=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -299,7 +300,7 @@ public class SettingsNotifFragment extends PageFragment {
         });
 
         Spinner sound_dropdown = (Spinner) notifications_frame.findViewById(R.id.sound_spinner);
-        String[] sound_items = new String[]{"Old Phone","Bell"};
+        String[] sound_items = new String[]{"Default","Bell"};
         ArrayAdapter<String> sound_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, sound_items);
         sound_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         sound_dropdown.setAdapter(sound_adapter);
@@ -309,5 +310,35 @@ public class SettingsNotifFragment extends PageFragment {
         ArrayAdapter<String> vibration_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, vibration_items);
         vibration_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         vibration_dropdown.setAdapter(vibration_adapter);
+        vibration_dropdown.setSelection(vibration_int_selection);
+        vibration_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                vibration_int_selection = i;
+                String sel_item=enabled_adapter.getItem(i);
+                boolean vibration_button;
+
+                if(sel_item == null)
+                    return;
+
+                switch(sel_item) {
+                    case "ON":
+                        vibration_button = true;
+                        break;
+                    default:
+                        vibration_button = false;
+                        break;
+                }
+
+                Intent intent = new Intent(MainService.ACTION_UPDATE_VIB);
+                intent.putExtra(MainService.INTENT_VIB, vibration_button);
+                getContext().sendBroadcast(intent);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }

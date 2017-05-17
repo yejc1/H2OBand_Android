@@ -16,6 +16,12 @@ import android.support.v7.app.ActionBarActivity;
 
 public class NotificationCenter extends ActionBarActivity{
 
+    /*
+
+
+    not using this !!!!!!
+     */
+
     NotificationCompat.Builder notification;
     private static final int uniqueID= 45512;
 

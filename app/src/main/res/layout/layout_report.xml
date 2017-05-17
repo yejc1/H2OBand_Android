@@ -102,6 +102,28 @@
                     android:textSize="20sp"
                     android:textAlignment="center"/>
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="25dp"
+                    android:background="#00000000" />
+
+                <TextView
+                    android:id="@+id/textView888"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Today you drank"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="60 oz"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
             </LinearLayout>
 
             <!--<LinearLayout
