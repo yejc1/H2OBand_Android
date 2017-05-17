@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class MainActivity extends AppCompatActivity
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    SettingsInfoFragment settingsInfoFragment;
+    SettingsNotifFragment settingsNotifFragment;
+    PageFragment selectedMenuItem;
 
 
 
@@ -99,6 +102,10 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        settingsInfoFragment = new SettingsInfoFragment();
+        settingsNotifFragment = new SettingsNotifFragment();
+        selectedMenuItem = null;
 
 
 
@@ -144,39 +151,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        FrameLayout main_frame = (FrameLayout)findViewById(R.id.main_frame);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        int position = mViewPager.getCurrentItem();
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
-                .onBackPressed()) {
+        } else if(main_frame.getChildCount() > 0 && main_frame.getChildAt(0) instanceof ViewPager) {
+            int position = mViewPager.getCurrentItem();
+            if(!((PageFragment)mSectionsPagerAdapter.getItem(position))
+                    .onBackPressed()) {
                 super.onBackPressed();
+            }
+        } else {
+            main_frame.addView(mViewPager);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(selectedMenuItem)
+                    .commit();
+            selectedMenuItem = null;
         }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch(id) {
-            case R.id.menu_acct_info:
-                Log.d("MainActivity", "Account info selected");
-                break;
-            case R.id.menu_goal:
-                Log.d("MainActivity", "Goal selected");
-                break;
-            case R.id.menu_notification:
-                Log.d("MainActivity", "Notification selected");
-                break;
-            default:
-                return false;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 
@@ -214,7 +207,7 @@ public class MainActivity extends AppCompatActivity
         private void fillPageList() {
             pages.add(new HomeFragment());
             pages.add(new ReportFragment());
-            pages.add(new SettingFragment());
+            //pages.add(new SettingFragment());
         }
 
         @Override
@@ -251,5 +244,48 @@ public class MainActivity extends AppCompatActivity
                     return "";
             }
         }
+    }
+
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.menu_acct_info:
+                selectedMenuItem = settingsInfoFragment;
+                Log.d("MainActivity", "Account info selected");
+                break;
+            /*case R.id.menu_goal:
+                Log.d("MainActivity", "Goal selected");
+                break;*/
+            case R.id.menu_notification:
+                selectedMenuItem = settingsNotifFragment;
+                Log.d("MainActivity", "Notification selected");
+                break;
+            default:
+                return false;
+        }
+
+        FrameLayout main_frame = (FrameLayout)findViewById(R.id.main_frame);
+        if(main_frame.getChildAt(0) instanceof ViewPager) {
+            main_frame.removeViewAt(0);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.main_frame, selectedMenuItem)
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, selectedMenuItem)
+                    .commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

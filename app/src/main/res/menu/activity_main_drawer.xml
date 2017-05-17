@@ -4,10 +4,10 @@
         android:id="@+id/menu_acct_info"
         android:icon="@drawable/notif"
         android:title="Account Info" />
-    <item
+    <!--<item
         android:id="@+id/menu_goal"
         android:icon="@drawable/notif"
-        android:title="Goal" />
+        android:title="Goal" />-->
     <item
         android:id="@+id/menu_notification"
         android:icon="@drawable/notif"

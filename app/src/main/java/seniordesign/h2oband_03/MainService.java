@@ -94,7 +94,7 @@ public class MainService extends Service {
 
             //Notification timing
             mFromSeconds= 6;
-            mToSeconds= 24;
+            mToSeconds= 7;
 
             activityLevel = "Light";
         }
