@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    TabLayout tabLayout;
     private ViewPager mViewPager;
     SettingsInfoFragment settingsInfoFragment;
     SettingsNotifFragment settingsNotifFragment;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         settingsInfoFragment = new SettingsInfoFragment();
@@ -164,11 +166,12 @@ public class MainActivity extends AppCompatActivity
                 super.onBackPressed();
             }
         } else {
-            main_frame.addView(mViewPager);
             getSupportFragmentManager()
                     .beginTransaction()
                     .remove(selectedMenuItem)
                     .commit();
+            main_frame.addView(mViewPager);
+            tabLayout.setVisibility(View.VISIBLE);
             selectedMenuItem = null;
         }
     }
@@ -270,9 +273,12 @@ public class MainActivity extends AppCompatActivity
                 return false;
         }
 
+
+
         FrameLayout main_frame = (FrameLayout)findViewById(R.id.main_frame);
         if(main_frame.getChildAt(0) instanceof ViewPager) {
             main_frame.removeViewAt(0);
+            tabLayout.setVisibility(View.GONE);
 
             getSupportFragmentManager()
                     .beginTransaction()
