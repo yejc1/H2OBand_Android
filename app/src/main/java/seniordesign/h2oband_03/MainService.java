@@ -81,7 +81,7 @@ public class MainService extends Service {
             mPercentFull = BOTTLE_MAX;
             mGoal30Sec = 5;
 
-            mGoalOZ = 73;
+            mGoalOZ = 79;
 
             mPercentFullLastCheckpoint = BOTTLE_MAX;
 
