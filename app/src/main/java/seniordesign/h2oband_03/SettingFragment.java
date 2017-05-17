@@ -328,6 +328,13 @@ public class SettingFragment extends PageFragment {
         if(settings_frame != null) {
             LinearLayout notifications_frame = (LinearLayout)settings_frame.getChildAt(1);
 
+            Spinner enabled_dropdown = (Spinner)notifications_frame.findViewById(R.id.enabled_dropdown);
+            String[] enabled_items = new String[]{"YES","NO"};
+            final ArrayAdapter<String> enabled_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, enabled_items);
+            enabled_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            enabled_dropdown.setAdapter(enabled_adapter);
+
+
             Spinner from_dropdown = (Spinner)notifications_frame.findViewById(R.id.from_spinner);
             String[] from_items = new String[]{"06:00","07:00","08:00","09:00", "10:00","11:00","12:00", "13:00","14:00","15:00","16:00", "17:00", "18:00", "19:00","20:00", "21:00","22:00","23:00","24:00"};
             final ArrayAdapter<String> from_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, from_items);
