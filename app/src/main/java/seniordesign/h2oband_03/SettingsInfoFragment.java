@@ -173,8 +173,8 @@ public class SettingsInfoFragment extends PageFragment {
         });
 
         Spinner unit_dropdown = (Spinner) view.findViewById(R.id.unit_spinner);
-        String[] unit_items = new String[]{"Metric", "American"};
-        ArrayAdapter<String> unit_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, unit_items);
+        String[] unit_items = new String[]{"American","Metric"};
+        final ArrayAdapter<String> unit_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, unit_items);
         unit_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         unit_dropdown.setAdapter(unit_adapter);
         unit_dropdown.setSelection(unit_selection);
@@ -182,6 +182,27 @@ public class SettingsInfoFragment extends PageFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 unit_selection = i;
+
+
+                String sel_item = unit_adapter.getItem(i);
+                boolean unit_button;
+
+                if(sel_item == null)
+                    return;
+
+                switch(sel_item) {
+                    case "American":
+                        unit_button = true;
+                        break;
+                    default:
+                        unit_button = false;
+                        break;
+                }
+
+
+                Intent intent = new Intent(MainService.ACTION_UPDATE_UNIT);
+                intent.putExtra(MainService.INTENT_UNIT, unit_button);
+                getContext().sendBroadcast(intent);
             }
 
             @Override

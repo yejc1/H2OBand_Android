@@ -39,6 +39,7 @@ public class MainService extends Service {
     public static final String ACTION_UPDATE_ACTIVITY = "update_activity";
     public static final String ACTION_UPDATE_NOTI = "update_notif_en";
     public static final String ACTION_UPDATE_VIB = "update_vib";
+    public static final String ACTION_UPDATE_UNIT="update_unit";
 
 
     // Intent Extra labels
@@ -53,6 +54,7 @@ public class MainService extends Service {
     public static final String INTENT_ACTIVITY = "activity";
     public static final String INTENT_NOTIF_EN="notif_en";
     public static final String INTENT_VIB="notif_vib";
+    public static final String INTENT_UNIT="notif_unit";
 
 
     /* **************** Bottle Info **************** */
@@ -87,6 +89,9 @@ public class MainService extends Service {
 
         private boolean mVibration;
 
+        //is true, american, false metric
+        private boolean mUnit;
+
         H2OBand_Info() {
             /* Initial bottle layout_settings */
             mDrainVelocity = 0;
@@ -110,6 +115,7 @@ public class MainService extends Service {
 
             mEnabled=false;
             mVibration=false;
+            mUnit=true;
 
             activityLevel = "Light";
         }
@@ -239,6 +245,8 @@ public class MainService extends Service {
 
         void setVibration(boolean vibration){mVibration= vibration;}
 
+        void setUnit(boolean unit){mUnit= unit;}
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -280,6 +288,8 @@ public class MainService extends Service {
         }
 
         boolean getVibration(){return mVibration;}
+
+        boolean getUnit(){return mUnit;}
 
         String getActivityLevel(){return activityLevel;}
     }
@@ -346,6 +356,9 @@ public class MainService extends Service {
                 case ACTION_UPDATE_VIB:
                     info.setVibration(intent.getExtras().getBoolean(INTENT_VIB));
                     break;
+                case ACTION_UPDATE_UNIT:
+                    info.setUnit(intent.getExtras().getBoolean(INTENT_UNIT));
+                    break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
@@ -380,6 +393,7 @@ public class MainService extends Service {
             response.putExtra(INTENT_WEIGHT, info.getWeight());
             response.putExtra(INTENT_NOTIF_EN,info.getEnabled());
             response.putExtra(INTENT_VIB,info.getVibration());
+            response.putExtra(INTENT_UNIT,info.getUnit());
             sendBroadcast(response);
         }
     };
@@ -410,6 +424,7 @@ public class MainService extends Service {
         intentFilter.addAction(ACTION_UPDATE_ACTIVITY);
         intentFilter.addAction(ACTION_UPDATE_NOTI);
         intentFilter.addAction(ACTION_UPDATE_VIB);
+        intentFilter.addAction(ACTION_UPDATE_UNIT);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 

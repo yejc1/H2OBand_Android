@@ -21,8 +21,17 @@ public class ReportFragment extends PageFragment {
             if(getView() != null) {
                 Log.d("ReportFragment", "Goal in ounces = " + msg.getData().getInt(MainService.INTENT_GOAL_OZ));
                 TextView textView23 = (TextView) getView().findViewById(R.id.textView23);
-                textView23
+
+                Log.d("ReportFragment", "Unit selection = " + msg.getData().getBoolean(MainService.INTENT_UNIT));
+
+                //if true-american, false-metric
+                if(msg.getData().getBoolean(MainService.INTENT_UNIT))
+                    textView23
                         .setText(new StringBuilder(msg.getData().getInt(MainService.INTENT_GOAL_OZ) + " oz"));
+                else
+                    textView23
+                            .setText(new StringBuilder(calculateML(msg.getData().getInt(MainService.INTENT_GOAL_OZ)) + " mL"));
+
 
                 /*Log.d("ReportFragment", "Acvitiy level = " + msg.getData().getString(MainService.INTENT_ACTIVITY));
                 TextView textView111 = (TextView) getView().findViewById(R.id.textView111);
@@ -40,6 +49,11 @@ public class ReportFragment extends PageFragment {
                              Bundle savedInstanceState) {
         getContext().sendBroadcast(new Intent(MainService.ACTION_REQUEST_INFO));
         return inflater.inflate(R.layout.layout_report, container, false);
+    }
+
+    int calculateML(int oz){
+        return (int)(oz * 29.5735);
+
     }
 
 
