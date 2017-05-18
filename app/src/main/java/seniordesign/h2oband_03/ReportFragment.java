@@ -22,7 +22,7 @@ public class ReportFragment extends PageFragment {
                 Log.d("ReportFragment", "Goal in ounces = " + msg.getData().getInt(MainService.INTENT_GOAL_OZ));
                 TextView textView23 = (TextView) getView().findViewById(R.id.textView23);
 
-                Log.d("ReportFragment", "Unit selection = " + msg.getData().getBoolean(MainService.INTENT_UNIT));
+               // Log.d("ReportFragment", "Unit selection = " + msg.getData().getBoolean(MainService.INTENT_UNIT));
 
                 //if true-american, false-metric
                 if(msg.getData().getBoolean(MainService.INTENT_UNIT))

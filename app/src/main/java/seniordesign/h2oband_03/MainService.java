@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -40,6 +42,7 @@ public class MainService extends Service {
     public static final String ACTION_UPDATE_NOTI = "update_notif_en";
     public static final String ACTION_UPDATE_VIB = "update_vib";
     public static final String ACTION_UPDATE_UNIT="update_unit";
+    public static final String ACTION_UPDATE_SOUND="update_sound";
 
 
     // Intent Extra labels
@@ -55,6 +58,7 @@ public class MainService extends Service {
     public static final String INTENT_NOTIF_EN="notif_en";
     public static final String INTENT_VIB="notif_vib";
     public static final String INTENT_UNIT="notif_unit";
+    public static final String INTENT_SOUND="notif_sound";
 
 
     /* **************** Bottle Info **************** */
@@ -89,8 +93,12 @@ public class MainService extends Service {
 
         private boolean mVibration;
 
+
         //is true, american, false metric
         private boolean mUnit;
+
+        //if true-default, false ring
+        private boolean mSound;
 
         H2OBand_Info() {
             /* Initial bottle layout_settings */
@@ -116,6 +124,7 @@ public class MainService extends Service {
             mEnabled=false;
             mVibration=false;
             mUnit=true;
+            mSound=true;
 
             activityLevel = "Light";
         }
@@ -247,6 +256,8 @@ public class MainService extends Service {
 
         void setUnit(boolean unit){mUnit= unit;}
 
+        void setSound(boolean sound){mSound= sound;}
+
         int getDrainVelocity() {
             return mDrainVelocity;
         }
@@ -290,6 +301,8 @@ public class MainService extends Service {
         boolean getVibration(){return mVibration;}
 
         boolean getUnit(){return mUnit;}
+
+        boolean getSound(){return mSound;}
 
         String getActivityLevel(){return activityLevel;}
     }
@@ -359,6 +372,9 @@ public class MainService extends Service {
                 case ACTION_UPDATE_UNIT:
                     info.setUnit(intent.getExtras().getBoolean(INTENT_UNIT));
                     break;
+                case ACTION_UPDATE_SOUND:
+                    info.setSound(intent.getExtras().getBoolean(INTENT_SOUND));
+                    break;
                 case ACTION_UPDATE_GOAL:
                     Log.d("MainService", "Updating goal");
                     info.setGoalOZ(intent.getExtras().getInt(INTENT_GOAL_OZ));
@@ -394,6 +410,7 @@ public class MainService extends Service {
             response.putExtra(INTENT_NOTIF_EN,info.getEnabled());
             response.putExtra(INTENT_VIB,info.getVibration());
             response.putExtra(INTENT_UNIT,info.getUnit());
+            response.putExtra(INTENT_SOUND,info.getSound());
             sendBroadcast(response);
         }
     };
@@ -425,6 +442,7 @@ public class MainService extends Service {
         intentFilter.addAction(ACTION_UPDATE_NOTI);
         intentFilter.addAction(ACTION_UPDATE_VIB);
         intentFilter.addAction(ACTION_UPDATE_UNIT);
+        intentFilter.addAction(ACTION_UPDATE_SOUND);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -593,7 +611,16 @@ public class MainService extends Service {
             nBuilder.setContentText("You need to drink more water");
             nBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             nBuilder.setAutoCancel(true);
-            nBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+
+
+            Log.i("MainService", "sound = " + info.mSound);
+            if(info.mSound){
+                nBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);}
+            else{
+
+                nBuilder.setSound( Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.demonstrative));
+            }
+
 
             if (info.mVibration){
                 nBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });}

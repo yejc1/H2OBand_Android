@@ -25,6 +25,7 @@ public class SettingsNotifFragment extends PageFragment {
     int to_int_selection= 0;
     int enabled_int_selection=0;
     int vibration_int_selection=0;
+    int sound_int_selection=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -300,10 +301,41 @@ public class SettingsNotifFragment extends PageFragment {
         });
 
         Spinner sound_dropdown = (Spinner) notifications_frame.findViewById(R.id.sound_spinner);
-        String[] sound_items = new String[]{"Default","Bell"};
-        ArrayAdapter<String> sound_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, sound_items);
+        String[] sound_items = new String[]{"Default","Ring"};
+        final ArrayAdapter<String> sound_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, sound_items);
         sound_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         sound_dropdown.setAdapter(sound_adapter);
+        sound_dropdown.setSelection(vibration_int_selection);
+        sound_dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sound_int_selection = i;
+                String sel_item=sound_adapter.getItem(i);
+                boolean sound_button;
+
+                if(sel_item == null)
+                    return;
+
+                switch(sel_item) {
+                    case "Default":
+                        sound_button = true;
+                        break;
+                    default:
+                        sound_button = false;
+                        break;
+                }
+
+                Intent intent = new Intent(MainService.ACTION_UPDATE_SOUND);
+                intent.putExtra(MainService.INTENT_SOUND, sound_button);
+                getContext().sendBroadcast(intent);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         Spinner vibration_dropdown = (Spinner) notifications_frame.findViewById(R.id.vibration_spinner);
         String[] vibration_items = new String[]{"ON","OFF"};
